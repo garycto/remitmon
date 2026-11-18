@@ -54,20 +54,10 @@ builder.Services.AddDbContext<RemitMonDbContext>(options =>
     var connString = builder.Configuration.GetConnectionString("DefaultConnection");
     if (string.IsNullOrEmpty(connString))
     {
-        if (builder.Environment.IsDevelopment())
-        {
-            options.UseSqlite("Data Source=remitmon-demo.db");
-        }
-        else
-        {
-            throw new InvalidOperationException(
-                "DefaultConnection is not configured. Please set Supabase connection string in appsettings.json");
-        }
+        throw new InvalidOperationException(
+            "DefaultConnection is not configured. Please set Supabase connection string in appsettings.json");
     }
-    else
-    {
-        options.UseNpgsql(connString);
-    }
+    options.UseNpgsql(connString);
 });
 
 var app = builder.Build();
