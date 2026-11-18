@@ -14,6 +14,7 @@
   "dotnet.inlayHints.enableInlayHintsForImplicitVariableTypes": false,
   "dotnet.inlayHints.enableInlayHintsForLambdaParameterTypes": false,
   "dotnet.inlayHints.enableInlayHintsForTypes": false,
+  "yaml.validate": false,
   "[csharp]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp",
     "editor.formatOnSave": true,
