@@ -1,15 +1,12 @@
 name: CI
-
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     services:
       postgres:
         image: postgres:16-alpine
@@ -24,25 +21,19 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
-
     steps:
       - uses: actions/checkout@v4
-
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "10.0.x"
-
       - name: Restore dependencies
         run: dotnet restore
-
       - name: Build
         run: dotnet build --no-restore --configuration Release
-
       - name: Run tests
         run: dotnet test --no-build --verbosity normal --configuration Release
         env:
           ConnectionStrings__DefaultConnection: "Server=localhost;Port=5432;User Id=remitmon;Password=remitmon_dev;Database=remitmon_test;"
-
       - name: Check OpenAPI spec
         run: dotnet build src/RemitMon.Api/RemitMon.Api.csproj --configuration Release

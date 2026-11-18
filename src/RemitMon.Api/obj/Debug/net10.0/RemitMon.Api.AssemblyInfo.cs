@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RemitMon.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a1b02b4b19bb73e2f499584fd10c0110fc500fe")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0cc9461dc174c98d8b3e93ef506884b4946883a5")]
 [assembly: System.Reflection.AssemblyProductAttribute("RemitMon.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RemitMon.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
