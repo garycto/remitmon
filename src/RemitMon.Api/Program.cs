@@ -49,15 +49,20 @@ builder.Services
 builder.Services.AddAuthorization();
 
 // Add DbContext with Supabase connection
+var connString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrEmpty(connString))
+{
+    throw new InvalidOperationException(
+        "DefaultConnection is not configured. Please set Supabase connection string in appsettings.json");
+}
+
+var npgsqlBuilder = new Npgsql.NpgsqlDataSourceBuilder(connString);
+npgsqlBuilder.EnableDynamicJson();
+var dataSource = npgsqlBuilder.Build();
+
 builder.Services.AddDbContext<RemitMonDbContext>(options =>
 {
-    var connString = builder.Configuration.GetConnectionString("DefaultConnection");
-    if (string.IsNullOrEmpty(connString))
-    {
-        throw new InvalidOperationException(
-            "DefaultConnection is not configured. Please set Supabase connection string in appsettings.json");
-    }
-    options.UseNpgsql(connString);
+    options.UseNpgsql(dataSource);
 });
 
 var app = builder.Build();
