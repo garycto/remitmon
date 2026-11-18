@@ -5,7 +5,8 @@
       "name": "Debug: Run & Open Browser",
       "type": "node",
       "request": "launch",
-      "preLaunchTask": "Debug Backend API",
+      "preLaunchTask": "Start Backend API",
+      "postDebugTask": "Start Frontend Dev Server",
       "skipFiles": ["<node_internals>/**"],
       "presentation": {
         "hidden": false

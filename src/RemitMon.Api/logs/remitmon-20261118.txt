@@ -1210,3 +1210,208 @@ System.InvalidOperationException: An exception has been raised that is likely du
 2026-11-18 15:09:58.352 -05:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
 2026-11-18 15:09:58.354 -05:00 [INF] HTTP GET /openapi/v1.json responded 200 in 134.6380 ms
 2026-11-18 15:09:58.355 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/openapi/v1.json - 200 null application/json;charset=utf-8 146.8106ms
+2026-11-18 15:16:12.341 -05:00 [WRN] Could not initialize database: Failed to connect to 127.0.0.1:5432
+2026-11-18 15:16:12.382 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 15:16:12.463 -05:00 [INF] Now listening on: http://localhost:5199
+2026-11-18 15:16:12.463 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 15:16:12.463 -05:00 [INF] Hosting environment: Development
+2026-11-18 15:16:12.463 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api
+2026-11-18 15:17:44.409 -05:00 [WRN] Could not initialize database: Failed to connect to 127.0.0.1:5432
+2026-11-18 15:17:44.443 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 15:17:44.559 -05:00 [INF] Now listening on: http://localhost:5199
+2026-11-18 15:17:44.559 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 15:17:44.559 -05:00 [INF] Hosting environment: Development
+2026-11-18 15:17:44.559 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api
+2026-11-18 15:17:57.338 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/swagger-ui.html - null null
+2026-11-18 15:17:57.374 -05:00 [WRN] Failed to determine the https port for redirect.
+2026-11-18 15:17:57.380 -05:00 [INF] The file /swagger-ui.html was not modified
+2026-11-18 15:17:57.385 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/swagger-ui.html - 304 null text/html 46.8383ms
+2026-11-18 15:17:57.611 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/api-docs.html - null null
+2026-11-18 15:17:57.612 -05:00 [INF] The file /api-docs.html was not modified
+2026-11-18 15:17:57.612 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/api-docs.html - 304 null text/html 2.0056ms
+2026-11-18 15:17:57.624 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/openapi/v1.json - null null
+2026-11-18 15:17:57.640 -05:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-11-18 15:17:57.655 -05:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2026-11-18 15:17:57.739 -05:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-11-18 15:17:57.742 -05:00 [INF] HTTP GET /openapi/v1.json responded 200 in 111.7485 ms
+2026-11-18 15:17:57.743 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/openapi/v1.json - 200 null application/json;charset=utf-8 119.0203ms
+2026-11-18 15:21:10.530 -05:00 [WRN] Could not initialize database: Failed to connect to 127.0.0.1:5432
+2026-11-18 15:21:10.574 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 15:21:10.661 -05:00 [INF] Now listening on: http://localhost:5199
+2026-11-18 15:21:10.661 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 15:21:10.661 -05:00 [INF] Hosting environment: Development
+2026-11-18 15:21:10.661 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api
+2026-11-18 15:21:23.391 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/swagger-ui.html - null null
+2026-11-18 15:21:23.424 -05:00 [WRN] Failed to determine the https port for redirect.
+2026-11-18 15:21:23.428 -05:00 [INF] The file /swagger-ui.html was not modified
+2026-11-18 15:21:23.431 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/swagger-ui.html - 304 null text/html 41.2602ms
+2026-11-18 15:21:23.583 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/api-docs.html - null null
+2026-11-18 15:21:23.584 -05:00 [INF] The file /api-docs.html was not modified
+2026-11-18 15:21:23.585 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/api-docs.html - 304 null text/html 1.6778ms
+2026-11-18 15:21:23.600 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/openapi/v1.json - null null
+2026-11-18 15:21:23.624 -05:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-11-18 15:21:23.637 -05:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2026-11-18 15:21:23.705 -05:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-11-18 15:21:23.706 -05:00 [INF] HTTP GET /openapi/v1.json responded 200 in 102.3800 ms
+2026-11-18 15:21:23.707 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/openapi/v1.json - 200 null application/json;charset=utf-8 106.9282ms
+2026-11-18 15:22:13.273 -05:00 [WRN] Could not initialize database: Failed to connect to 127.0.0.1:5432
+2026-11-18 15:22:13.303 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 15:22:13.376 -05:00 [INF] Now listening on: http://localhost:5199
+2026-11-18 15:22:13.376 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 15:22:13.376 -05:00 [INF] Hosting environment: Development
+2026-11-18 15:22:13.376 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api
+2026-11-18 15:25:17.983 -05:00 [WRN] Could not initialize database: Failed to connect to 127.0.0.1:5432
+2026-11-18 15:25:18.052 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 15:25:18.173 -05:00 [INF] Now listening on: http://localhost:5199
+2026-11-18 15:25:18.173 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 15:25:18.173 -05:00 [INF] Hosting environment: Development
+2026-11-18 15:25:18.173 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api
+2026-11-18 15:25:30.195 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/swagger-ui.html - null null
+2026-11-18 15:25:30.228 -05:00 [WRN] Failed to determine the https port for redirect.
+2026-11-18 15:25:30.231 -05:00 [INF] The file /swagger-ui.html was not modified
+2026-11-18 15:25:30.235 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/swagger-ui.html - 304 null text/html 40.5316ms
+2026-11-18 15:25:30.366 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/api-docs.html - null null
+2026-11-18 15:25:30.367 -05:00 [INF] The file /api-docs.html was not modified
+2026-11-18 15:25:30.368 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/api-docs.html - 304 null text/html 1.7324ms
+2026-11-18 15:25:30.380 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/openapi/v1.json - null null
+2026-11-18 15:25:30.388 -05:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-11-18 15:25:30.410 -05:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2026-11-18 15:25:30.535 -05:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-11-18 15:25:30.537 -05:00 [INF] HTTP GET /openapi/v1.json responded 200 in 153.0127 ms
+2026-11-18 15:25:30.537 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/openapi/v1.json - 200 null application/json;charset=utf-8 156.9737ms
+2026-11-18 15:28:37.246 -05:00 [WRN] Could not initialize database: Failed to connect to 127.0.0.1:5432
+2026-11-18 15:28:37.293 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 15:28:37.385 -05:00 [INF] Now listening on: http://localhost:5199
+2026-11-18 15:28:37.385 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 15:28:37.385 -05:00 [INF] Hosting environment: Development
+2026-11-18 15:28:37.385 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api
+2026-11-18 15:28:39.004 -05:00 [WRN] Could not initialize database: Failed to connect to 127.0.0.1:5432
+2026-11-18 15:28:39.036 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 15:28:39.114 -05:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5199: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Address already in use
+ ---> System.Net.Sockets.SocketException (48): Address already in use
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-11-18 15:28:51.085 -05:00 [WRN] Could not initialize database: Failed to connect to 127.0.0.1:5432
+2026-11-18 15:28:51.115 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 15:28:51.185 -05:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5199: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Address already in use
+ ---> System.Net.Sockets.SocketException (48): Address already in use
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-11-18 15:29:01.249 -05:00 [WRN] Could not initialize database: Failed to connect to 127.0.0.1:5432
+2026-11-18 15:29:01.279 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 15:29:01.348 -05:00 [INF] Now listening on: http://localhost:5199
+2026-11-18 15:29:01.348 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 15:29:01.348 -05:00 [INF] Hosting environment: Development
+2026-11-18 15:29:01.348 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api
+2026-11-18 15:29:58.339 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/ - null null
+2026-11-18 15:29:58.379 -05:00 [WRN] Failed to determine the https port for redirect.
+2026-11-18 15:29:58.386 -05:00 [INF] HTTP GET / responded 404 in 4.4123 ms
+2026-11-18 15:29:58.389 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/ - 404 0 null 51.5763ms
+2026-11-18 15:29:58.390 -05:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5199/, Response status code: 404
+2026-11-18 15:30:09.602 -05:00 [WRN] Could not initialize database: Failed to connect to 127.0.0.1:5432
+2026-11-18 15:30:09.640 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 15:30:09.734 -05:00 [INF] Now listening on: http://localhost:5199
+2026-11-18 15:30:09.734 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 15:30:09.734 -05:00 [INF] Hosting environment: Development
+2026-11-18 15:30:09.735 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api
+2026-11-18 15:30:22.631 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/swagger-ui.html - null null
+2026-11-18 15:30:22.682 -05:00 [WRN] Failed to determine the https port for redirect.
+2026-11-18 15:30:22.686 -05:00 [INF] The file /swagger-ui.html was not modified
+2026-11-18 15:30:22.691 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/swagger-ui.html - 304 null text/html 62.3234ms
+2026-11-18 15:30:22.796 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/api-docs.html - null null
+2026-11-18 15:30:22.797 -05:00 [INF] The file /api-docs.html was not modified
+2026-11-18 15:30:22.798 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/api-docs.html - 304 null text/html 2.1621ms
+2026-11-18 15:30:22.814 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/openapi/v1.json - null null
+2026-11-18 15:30:22.828 -05:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-11-18 15:30:22.842 -05:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2026-11-18 15:30:22.913 -05:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-11-18 15:30:22.915 -05:00 [INF] HTTP GET /openapi/v1.json responded 200 in 97.2724 ms
+2026-11-18 15:30:22.916 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/openapi/v1.json - 200 null application/json;charset=utf-8 102.6283ms
+ ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-11-18 15:30:25.253 -05:00 [WRN] Could not initialize database: Failed to connect to 127.0.0.1:5432
+2026-11-18 15:30:25.288 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 15:30:25.365 -05:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5199: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Address already in use
+ ---> System.Net.Sockets.SocketException (48): Address already in use
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-11-18 15:30:37.658 -05:00 [WRN] Could not initialize database: Failed to connect to 127.0.0.1:5432
+2026-11-18 15:30:37.691 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 15:30:37.761 -05:00 [INF] Now listening on: http://localhost:5199
+2026-11-18 15:30:37.762 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 15:30:37.762 -05:00 [INF] Hosting environment: Development
+2026-11-18 15:30:37.762 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api

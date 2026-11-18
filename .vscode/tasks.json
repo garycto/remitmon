@@ -12,13 +12,23 @@
       "problemMatcher": []
     },
     {
+      "label": "Cleanup Port 5173",
+      "type": "shell",
+      "command": "lsof -i :5173 2>/dev/null | grep LISTEN | awk '{print $2}' | xargs -I {} kill -9 {} 2>/dev/null; true",
+      "presentation": {
+        "echo": false,
+        "reveal": "silent"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "Debug Backend API",
       "dependsOn": ["Cleanup Port 5199"],
       "type": "shell",
       "command": "/bin/bash",
       "args": [
         "-c",
-        "dotnet run --project src/RemitMon.Api --configuration Debug 2>&1 & sleep 15 && open 'http://localhost:5199/swagger-ui.html' && wait"
+        "dotnet run --project src/RemitMon.Api --configuration Debug 2>&1 & sleep 15 && open 'http://localhost:5173' && wait"
       ],
       "isBackground": false,
       "presentation": {
@@ -30,6 +40,7 @@
     },
     {
       "label": "Start Backend API",
+      "dependsOn": ["Cleanup Port 5199"],
       "type": "shell",
       "command": "dotnet",
       "args": ["run", "--project", "src/RemitMon.Api"],
@@ -61,6 +72,7 @@
     },
     {
       "label": "Start Frontend Dev Server",
+      "dependsOn": ["Cleanup Port 5173"],
       "type": "shell",
       "command": "npm",
       "args": ["run", "dev"],
@@ -77,7 +89,7 @@
         },
         "background": {
           "activeOnStart": true,
-          "beginsPattern": "^.*VITE.*dev server running.*$",
+          "beginsPattern": "^.*VITE.*ready.*$|^.*Local:.*$",
           "endsPattern": "^.*Local:.*http://localhost:5173.*$"
         }
       },
@@ -89,6 +101,17 @@
         "showReuseMessage": false,
         "clear": false
       }
+    },
+    {
+      "label": "Open Frontend in Browser",
+      "type": "shell",
+      "command": "open",
+      "args": ["http://localhost:5173"],
+      "presentation": {
+        "echo": false,
+        "reveal": "silent"
+      },
+      "problemMatcher": []
     },
     {
       "label": "Build Backend (Release)",
