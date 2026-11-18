@@ -1,5 +1,6 @@
 using Serilog;
 using RemitMon.Infrastructure;
+using RemitMon.Infrastructure.Seeding;
 using RemitMon.Api.Endpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -61,13 +62,19 @@ builder.Services.AddDbContext<RemitMonDbContext>(options =>
 
 var app = builder.Build();
 
-// Apply migrations
+// Apply migrations and seed demo data
 using (var scope = app.Services.CreateScope())
 {
     try
     {
         var db = scope.ServiceProvider.GetRequiredService<RemitMonDbContext>();
         db.Database.EnsureCreated();
+        
+        // Seed demo data in development
+        if (app.Environment.IsDevelopment())
+        {
+            DemoDataSeeder.SeedDemoData(db);
+        }
     }
     catch (Exception ex)
     {

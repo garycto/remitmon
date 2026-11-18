@@ -55,3 +55,4 @@
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/bin/Debug/net10.0/RemitMon.Api.staticwebassets.runtime.json
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/compressed/oy70yyca74-{0}-xjf5mve1yw-xjf5mve1yw.gz
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/compressed/eebsz59ztq-{0}-xv85nykxlk-xv85nykxlk.gz
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/RemitMon.Api.sourcelink.json

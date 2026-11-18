@@ -99,3 +99,4 @@
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine.Tests/obj/Debug/net10.0/RemitMon.Engine.Tests.pdb
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine.Tests/obj/Debug/net10.0/RemitMon.Engine.Tests.genruntimeconfig.cache
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine.Tests/obj/Debug/net10.0/ref/RemitMon.Engine.Tests.dll
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine.Tests/obj/Debug/net10.0/RemitMon.Engine.Tests.sourcelink.json

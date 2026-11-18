@@ -9,3 +9,4 @@
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine/obj/Debug/net10.0/refint/RemitMon.Engine.dll
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine/obj/Debug/net10.0/RemitMon.Engine.pdb
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine/obj/Debug/net10.0/ref/RemitMon.Engine.dll
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine/obj/Debug/net10.0/RemitMon.Engine.sourcelink.json
