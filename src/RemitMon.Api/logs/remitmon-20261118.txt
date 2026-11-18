@@ -1146,3 +1146,67 @@ System.InvalidOperationException: An exception has been raised that is likely du
 2026-11-18 14:58:33.484 -05:00 [INF] HTTP GET /openapi/v1.json responded 200 in 69.9513 ms
 2026-11-18 14:58:33.484 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/openapi/v1.json - 200 null application/json;charset=utf-8 70.9965ms
 2026-11-18 14:58:42.431 -05:00 [INF] Application is shutting down...
+2026-11-18 14:59:21.079 -05:00 [WRN] Could not initialize database: Failed to connect to 127.0.0.1:5432
+2026-11-18 14:59:21.185 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 14:59:21.311 -05:00 [INF] Now listening on: http://localhost:5199
+2026-11-18 14:59:21.311 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 14:59:21.320 -05:00 [INF] Hosting environment: Development
+2026-11-18 14:59:21.320 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api
+2026-11-18 14:59:26.505 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/health - null null
+2026-11-18 14:59:26.538 -05:00 [WRN] Failed to determine the https port for redirect.
+2026-11-18 14:59:26.545 -05:00 [INF] Executing endpoint 'HTTP: GET /health'
+2026-11-18 14:59:26.548 -05:00 [INF] Setting HTTP status code 200.
+2026-11-18 14:59:26.550 -05:00 [INF] Writing value of type '<>f__AnonymousType2`1' as Json.
+2026-11-18 14:59:26.554 -05:00 [INF] Executed endpoint 'HTTP: GET /health'
+2026-11-18 14:59:26.555 -05:00 [INF] HTTP GET /health responded 200 in 14.4659 ms
+2026-11-18 14:59:26.555 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/health - 200 null application/json; charset=utf-8 51.4949ms
+2026-11-18 15:00:47.651 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/demo.html - null null
+2026-11-18 15:00:47.667 -05:00 [INF] Sending file. Request path: '/demo.html'. Physical path: '/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/wwwroot/demo.html'
+2026-11-18 15:00:47.668 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/demo.html - 200 15910 text/html 16.8771ms
+2026-11-18 15:00:59.128 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/demo.html - null null
+2026-11-18 15:00:59.130 -05:00 [INF] Sending file. Request path: '/demo.html'. Physical path: '/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/wwwroot/demo.html'
+2026-11-18 15:00:59.130 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/demo.html - 200 15910 text/html 2.526ms
+2026-11-18 15:01:16.768 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/demo.html - null null
+2026-11-18 15:01:16.778 -05:00 [INF] Sending file. Request path: '/demo.html'. Physical path: '/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/wwwroot/demo.html'
+2026-11-18 15:01:16.779 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/demo.html - 200 15910 text/html 11.7381ms
+2026-11-18 15:01:16.878 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/favicon.ico - null null
+2026-11-18 15:01:16.892 -05:00 [INF] HTTP GET /favicon.ico responded 404 in 6.6893 ms
+2026-11-18 15:01:16.893 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/favicon.ico - 404 0 null 14.6676ms
+2026-11-18 15:01:16.894 -05:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5199/favicon.ico, Response status code: 404
+2026-11-18 15:05:40.968 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/demo.html - null null
+2026-11-18 15:05:41.028 -05:00 [INF] Sending file. Request path: '/demo.html'. Physical path: '/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/wwwroot/demo.html'
+2026-11-18 15:05:41.030 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/demo.html - 200 14168 text/html 65.8ms
+2026-11-18 15:08:35.503 -05:00 [INF] Application is shutting down...
+2026-11-18 15:08:45.159 -05:00 [WRN] Could not initialize database: Failed to connect to 127.0.0.1:5432
+2026-11-18 15:08:45.194 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 15:08:45.280 -05:00 [INF] Now listening on: http://localhost:5199
+2026-11-18 15:08:45.280 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 15:08:45.280 -05:00 [INF] Hosting environment: Development
+2026-11-18 15:08:45.280 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api
+2026-11-18 15:08:49.820 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/health - null null
+2026-11-18 15:08:49.872 -05:00 [WRN] Failed to determine the https port for redirect.
+2026-11-18 15:08:49.883 -05:00 [INF] Executing endpoint 'HTTP: GET /health'
+2026-11-18 15:08:49.886 -05:00 [INF] Setting HTTP status code 200.
+2026-11-18 15:08:49.887 -05:00 [INF] Writing value of type '<>f__AnonymousType2`1' as Json.
+2026-11-18 15:08:49.891 -05:00 [INF] Executed endpoint 'HTTP: GET /health'
+2026-11-18 15:08:49.892 -05:00 [INF] HTTP GET /health responded 200 in 13.9757 ms
+2026-11-18 15:08:49.893 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/health - 200 null application/json; charset=utf-8 74.011ms
+2026-11-18 15:09:44.760 -05:00 [WRN] Could not initialize database: Failed to connect to 127.0.0.1:5432
+2026-11-18 15:09:44.793 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 15:09:44.875 -05:00 [INF] Now listening on: http://localhost:5199
+2026-11-18 15:09:44.875 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 15:09:44.875 -05:00 [INF] Hosting environment: Development
+2026-11-18 15:09:44.875 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api
+2026-11-18 15:09:57.932 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/swagger-ui.html - null null
+2026-11-18 15:09:57.986 -05:00 [WRN] Failed to determine the https port for redirect.
+2026-11-18 15:09:57.998 -05:00 [INF] Sending file. Request path: '/swagger-ui.html'. Physical path: '/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/wwwroot/swagger-ui.html'
+2026-11-18 15:09:57.999 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/swagger-ui.html - 200 269 text/html 68.7556ms
+2026-11-18 15:09:58.187 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/api-docs.html - null null
+2026-11-18 15:09:58.190 -05:00 [INF] Sending file. Request path: '/api-docs.html'. Physical path: '/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/wwwroot/api-docs.html'
+2026-11-18 15:09:58.191 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/api-docs.html - 200 8672 text/html 4.7263ms
+2026-11-18 15:09:58.208 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/openapi/v1.json - null null
+2026-11-18 15:09:58.232 -05:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-11-18 15:09:58.254 -05:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2026-11-18 15:09:58.352 -05:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-11-18 15:09:58.354 -05:00 [INF] HTTP GET /openapi/v1.json responded 200 in 134.6380 ms
+2026-11-18 15:09:58.355 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/openapi/v1.json - 200 null application/json;charset=utf-8 146.8106ms

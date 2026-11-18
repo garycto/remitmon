@@ -1,5 +1,6 @@
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/bin/Debug/net10.0/appsettings.Development.json
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/bin/Debug/net10.0/appsettings.json
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/bin/Debug/net10.0/RemitMon.Api.staticwebassets.runtime.json
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/bin/Debug/net10.0/RemitMon.Api.staticwebassets.endpoints.json
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/bin/Debug/net10.0/RemitMon.Api
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/bin/Debug/net10.0/RemitMon.Api.deps.json
@@ -37,10 +38,14 @@
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/RemitMon.Api.csproj.CoreCompileInputs.cache
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/RemitMon.Api.MvcApplicationPartsAssemblyInfo.cs
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/RemitMon.Api.MvcApplicationPartsAssemblyInfo.cache
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/RemitMon.Api.sourcelink.json
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/rjimswa.dswa.cache.json
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/rjsmrazor.dswa.cache.json
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/scopedcss/bundle/RemitMon.Api.styles.css
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/compressed/oy70yyca74-{0}-xjf5mve1yw-xjf5mve1yw.gz
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/compressed/bni3i8zd4a-{0}-d6goh6v8t4-d6goh6v8t4.gz
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/compressed/eebsz59ztq-{0}-xv85nykxlk-xv85nykxlk.gz
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/staticwebassets.build.json
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/staticwebassets.build.json.cache
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/staticwebassets.development.json
@@ -52,7 +57,3 @@
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/RemitMon.Api.pdb
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/RemitMon.Api.genruntimeconfig.cache
 /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/ref/RemitMon.Api.dll
-/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/bin/Debug/net10.0/RemitMon.Api.staticwebassets.runtime.json
-/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/compressed/oy70yyca74-{0}-xjf5mve1yw-xjf5mve1yw.gz
-/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/compressed/eebsz59ztq-{0}-xv85nykxlk-xv85nykxlk.gz
-/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api/obj/Debug/net10.0/RemitMon.Api.sourcelink.json
