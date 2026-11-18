@@ -3,10 +3,9 @@
   "configurations": [
     {
       "name": "Debug: Run & Open Browser",
-      "type": "shell",
+      "type": "node",
       "request": "launch",
-      "command": "echo",
-      "args": ["Starting RemitMon..."],
+      "program": "${workspaceFolder}/src/RemitMon.Api/Program.cs",
       "preLaunchTask": "Debug: Backend & Frontend",
       "presentation": {
         "hidden": true
