@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RemitMon API Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .version {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .endpoints {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .endpoint {
+            border-bottom: 1px solid #eee;
+            padding: 20px;
+            transition: background 0.2s;
+        }
+        
+        .endpoint:hover {
+            background: #f9f9f9;
+        }
+        
+        .endpoint:last-child {
+            border-bottom: none;
+        }
+        
+        .endpoint-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .method {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            min-width: 50px;
+            text-align: center;
+        }
+        
+        .method.get { background: #61affe; }
+        .method.post { background: #49cc90; }
+        .method.put { background: #fca130; }
+        .method.delete { background: #f93e3e; }
+        .method.patch { background: #50e3c2; }
+        
+        .path {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            color: #333;
+            flex: 1;
+        }
+        
+        .description {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .details {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-size: 13px;
+        }
+        
+        .params, .responses {
+            margin: 15px 0;
+        }
+        
+        .params h4, .responses h4 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #666;
+        }
+        
+        .param-row, .response-row {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .param-row:last-child, .response-row:last-child {
+            border-bottom: none;
+        }
+        
+        .param-name {
+            font-weight: 600;
+            font-family: 'Monaco', monospace;
+            color: #333;
+        }
+        
+        .param-type {
+            font-size: 12px;
+            color: #999;
+            font-family: 'Monaco', monospace;
+        }
+        
+        .required {
+            color: #f93e3e;
+            font-weight: bold;
+        }
+        
+        .status-code {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="title">RemitMon API</h1>
+            <div class="version" id="version">Loading...</div>
+        </div>
+        
+        <div id="content" class="loading">Loading API documentation...</div>
+        <div id="error" class="error hidden"></div>
+    </div>
+    
+    <script>
+        async function loadSpec() {
+            try {
+                const response = await fetch('/openapi/v1.json');
+                if (!response.ok) throw new Error('Failed to load OpenAPI spec');
+                
+                const spec = await response.json();
+                renderSpec(spec);
+            } catch (error) {
+                showError('Failed to load API documentation: ' + error.message);
+            }
+        }
+        
+        function renderSpec(spec) {
+            document.getElementById('title').textContent = spec.info.title;
+            document.getElementById('version').textContent = `Version: ${spec.info.version}`;
+            
+            const endpoints = [];
+            
+            if (spec.paths) {
+                for (const [path, pathItem] of Object.entries(spec.paths)) {
+                    for (const [method, operation] of Object.entries(pathItem)) {
+                        if (!['get', 'post', 'put', 'delete', 'patch'].includes(method.toLowerCase())) continue;
+                        endpoints.push({
+                            method: method.toUpperCase(),
+                            path: path,
+                            operation: operation,
+                            operationId: operation.operationId || path
+                        });
+                    }
+                }
+            }
+            
+            const html = endpoints.map((ep, idx) => `
+                <div class="endpoint">
+                    <div class="endpoint-title" onclick="toggleDetails(${idx})">
+                        <span class="method ${ep.method.toLowerCase()}">${ep.method}</span>
+                        <span class="path">${ep.path}</span>
+                    </div>
+                    ${ep.operation.summary ? `<div class="description">${ep.operation.summary}</div>` : ''}
+                    <div id="details-${idx}" class="details hidden">
+                        ${ep.operation.description ? `<p style="margin-bottom: 15px;">${ep.operation.description}</p>` : ''}
+                        ${renderParams(ep.operation.parameters)}
+                        ${renderResponses(ep.operation.responses)}
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('content').innerHTML = `<div class="endpoints">${html}</div>`;
+        }
+        
+        function renderParams(params) {
+            if (!params || params.length === 0) return '';
+            return `
+                <div class="params">
+                    <h4>Parameters</h4>
+                    ${params.map(p => `
+                        <div class="param-row">
+                            <span class="param-name">${p.name}</span>
+                            <span class="param-type">${p.schema?.type || 'string'}</span>
+                            ${p.required ? '<span class="required">*</span>' : ''}
+                            ${p.description ? `<div style="color: #666; margin-top: 4px;">${p.description}</div>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        function renderResponses(responses) {
+            if (!responses) return '';
+            return `
+                <div class="responses">
+                    <h4>Responses</h4>
+                    ${Object.entries(responses).map(([code, resp]) => `
+                        <div class="response-row">
+                            <span class="status-code">${code}</span>
+                            ${resp.description ? `<div style="color: #666; margin-top: 4px;">${resp.description}</div>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        function toggleDetails(idx) {
+            const el = document.getElementById(`details-${idx}`);
+            el.classList.toggle('hidden');
+        }
+        
+        function showError(message) {
+            document.getElementById('content').classList.add('hidden');
+            document.getElementById('error').textContent = message;
+            document.getElementById('error').classList.remove('hidden');
+        }
+        
+        loadSpec();
+    </script>
+</body>
+</html>

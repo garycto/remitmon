@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug: Run & Open Browser",
+      "type": "node",
+      "request": "launch",
+      "preLaunchTask": "Debug Backend API",
+      "skipFiles": ["<node_internals>/**"],
+      "presentation": {
+        "hidden": false
+      }
+    }
+  ]
+}

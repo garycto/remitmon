@@ -1,0 +1,102 @@
+2026-11-18 10:22:37.014 -05:00 [WRN] Could not initialize database: DefaultConnection is not configured. Please set Supabase connection string in appsettings.json
+2026-11-18 10:22:37.152 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 10:22:37.430 -05:00 [INF] Now listening on: http://localhost:5000
+2026-11-18 10:22:37.430 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 10:22:37.430 -05:00 [INF] Hosting environment: Production
+2026-11-18 10:22:37.430 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor
+2026-11-18 10:22:39.048 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger - null null
+2026-11-18 10:22:39.090 -05:00 [WRN] Failed to determine the https port for redirect.
+2026-11-18 10:22:39.105 -05:00 [INF] HTTP GET /swagger responded 404 in 11.3614 ms
+2026-11-18 10:22:39.107 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/swagger - 404 0 null 60.7853ms
+2026-11-18 10:22:39.115 -05:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5000/swagger, Response status code: 404
+2026-11-18 10:22:39.267 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico - null null
+2026-11-18 10:22:39.268 -05:00 [INF] HTTP GET /favicon.ico responded 404 in 0.3627 ms
+2026-11-18 10:22:39.269 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/favicon.ico - 404 0 null 3.4953ms
+2026-11-18 10:22:39.269 -05:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5000/favicon.ico, Response status code: 404
+2026-11-18 10:24:04.122 -05:00 [WRN] Could not initialize database: DefaultConnection is not configured. Please set Supabase connection string in appsettings.json
+2026-11-18 10:24:04.250 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 10:24:04.410 -05:00 [INF] Now listening on: http://localhost:5000
+2026-11-18 10:24:04.410 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 10:24:04.410 -05:00 [INF] Hosting environment: Production
+2026-11-18 10:24:04.410 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor
+2026-11-18 10:24:05.449 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/swagger - null null
+2026-11-18 10:24:05.489 -05:00 [WRN] Failed to determine the https port for redirect.
+2026-11-18 10:24:05.503 -05:00 [INF] HTTP GET /swagger responded 404 in 10.5810 ms
+2026-11-18 10:24:05.505 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/swagger - 404 0 null 56.727ms
+2026-11-18 10:24:05.511 -05:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5000/swagger, Response status code: 404
+2026-11-18 10:24:10.376 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico - null null
+2026-11-18 10:24:10.376 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/apple-touch-icon-precomposed.png - null null
+2026-11-18 10:24:10.376 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/apple-touch-icon.png - null null
+2026-11-18 10:24:10.380 -05:00 [INF] HTTP GET /apple-touch-icon.png responded 404 in 2.8645 ms
+2026-11-18 10:24:10.380 -05:00 [INF] HTTP GET /favicon.ico responded 404 in 2.8335 ms
+2026-11-18 10:24:10.408 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/favicon.ico - 404 0 null 32.6314ms
+2026-11-18 10:24:10.380 -05:00 [INF] HTTP GET /apple-touch-icon-precomposed.png responded 404 in 2.7548 ms
+2026-11-18 10:24:10.408 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/apple-touch-icon.png - 404 0 null 32.6161ms
+2026-11-18 10:24:10.410 -05:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5000/favicon.ico, Response status code: 404
+2026-11-18 10:24:10.410 -05:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5000/apple-touch-icon.png, Response status code: 404
+2026-11-18 10:24:10.410 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/apple-touch-icon-precomposed.png - 404 0 null 34.9509ms
+2026-11-18 10:24:10.411 -05:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5000/apple-touch-icon-precomposed.png, Response status code: 404
+2026-11-18 10:27:40.647 -05:00 [WRN] Could not initialize database: DefaultConnection is not configured. Please set Supabase connection string in appsettings.json
+2026-11-18 10:27:40.760 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 10:27:40.926 -05:00 [INF] Now listening on: http://localhost:5000
+2026-11-18 10:27:40.926 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 10:27:40.926 -05:00 [INF] Hosting environment: Production
+2026-11-18 10:27:40.926 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor
+2026-11-18 10:35:49.415 -05:00 [WRN] Could not initialize database: DefaultConnection is not configured. Please set Supabase connection string in appsettings.json
+2026-11-18 10:35:49.549 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 10:35:49.687 -05:00 [INF] Now listening on: http://localhost:5000
+2026-11-18 10:35:49.687 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 10:35:49.687 -05:00 [INF] Hosting environment: Production
+2026-11-18 10:35:49.687 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor
+2026-11-18 10:37:59.363 -05:00 [INF] Application is shutting down...
+efaultConnection is not configured. Please set Supabase connection string in appsettings.json
+2026-11-18 10:37:49.126 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 10:37:49.216 -05:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5000: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Address already in use
+ ---> System.Net.Sockets.SocketException (48): Address already in use
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.DefaultAddressStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-11-18 14:10:47.659 -05:00 [WRN] Could not initialize database: DefaultConnection is not configured. Please set Supabase connection string in appsettings.json
+2026-11-18 14:10:47.768 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 14:10:47.964 -05:00 [INF] Now listening on: http://localhost:5000
+2026-11-18 14:10:47.964 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 14:10:47.964 -05:00 [INF] Hosting environment: Production
+2026-11-18 14:10:47.964 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor
+2026-11-18 14:12:39.766 -05:00 [WRN] Could not initialize database: DefaultConnection is not configured. Please set Supabase connection string in appsettings.json
+2026-11-18 14:12:40.069 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 14:12:40.289 -05:00 [INF] Now listening on: http://localhost:5000
+2026-11-18 14:12:40.289 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 14:12:40.289 -05:00 [INF] Hosting environment: Production
+2026-11-18 14:12:40.290 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor
+2026-11-18 14:13:03.686 -05:00 [WRN] Could not initialize database: DefaultConnection is not configured. Please set Supabase connection string in appsettings.json
+2026-11-18 14:13:03.796 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 14:13:03.946 -05:00 [INF] Now listening on: http://localhost:5000
+2026-11-18 14:13:03.946 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 14:13:03.946 -05:00 [INF] Hosting environment: Production
+2026-11-18 14:13:03.946 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor
+2026-11-18 14:14:39.073 -05:00 [WRN] Could not initialize database: DefaultConnection is not configured. Please set Supabase connection string in appsettings.json
+2026-11-18 14:14:39.159 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 14:14:39.323 -05:00 [INF] Now listening on: http://localhost:5000
+2026-11-18 14:14:39.323 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 14:14:39.323 -05:00 [INF] Hosting environment: Production
+2026-11-18 14:14:39.323 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor

@@ -1,0 +1,17 @@
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/bin/Release/net10.0/RemitMon.Infrastructure.deps.json
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/bin/Release/net10.0/RemitMon.Infrastructure.runtimeconfig.json
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/bin/Release/net10.0/RemitMon.Infrastructure.dll
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/bin/Release/net10.0/RemitMon.Infrastructure.pdb
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/bin/Release/net10.0/RemitMon.Domain.dll
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/bin/Release/net10.0/RemitMon.Domain.pdb
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/obj/Release/net10.0/RemitMon.Infrastructure.csproj.AssemblyReference.cache
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/obj/Release/net10.0/RemitMon.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/obj/Release/net10.0/RemitMon.Infrastructure.AssemblyInfoInputs.cache
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/obj/Release/net10.0/RemitMon.Infrastructure.AssemblyInfo.cs
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/obj/Release/net10.0/RemitMon.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/obj/Release/net10.0/RemitMon.5A0AD580.Up2Date
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/obj/Release/net10.0/RemitMon.Infrastructure.dll
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/obj/Release/net10.0/refint/RemitMon.Infrastructure.dll
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/obj/Release/net10.0/RemitMon.Infrastructure.pdb
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/obj/Release/net10.0/RemitMon.Infrastructure.genruntimeconfig.cache
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Infrastructure/obj/Release/net10.0/ref/RemitMon.Infrastructure.dll

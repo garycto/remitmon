@@ -1,0 +1,107 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Cleanup Port 5199",
+      "type": "shell",
+      "command": "lsof -i :5199 2>/dev/null | grep LISTEN | awk '{print $2}' | xargs -I {} kill -9 {} 2>/dev/null; true",
+      "presentation": {
+        "echo": false,
+        "reveal": "silent"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Debug Backend API",
+      "dependsOn": ["Cleanup Port 5199"],
+      "type": "shell",
+      "command": "/bin/bash",
+      "args": [
+        "-c",
+        "dotnet run --project src/RemitMon.Api --configuration Debug 2>&1 & sleep 15 && open 'http://localhost:5199/swagger-ui.html' && wait"
+      ],
+      "isBackground": false,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Start Backend API",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["run", "--project", "src/RemitMon.Api"],
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^.*$",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*Building.*$",
+          "endsPattern": "^.*Now listening on:.*5199.*$"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": false
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "label": "Start Frontend Dev Server",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev"],
+      "options": {
+        "cwd": "${workspaceFolder}/web"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^.*$",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*VITE.*dev server running.*$",
+          "endsPattern": "^.*Local:.*http://localhost:5173.*$"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": false
+      }
+    },
+    {
+      "label": "Build Backend (Release)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["build", "--configuration", "Release"],
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      }
+    }
+  ]
+}

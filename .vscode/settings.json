@@ -1,0 +1,31 @@
+{
+  "omnisharp.useMono": false,
+  "omnisharp.useModernNet": true,
+  "omnisharp.enableRoslynAnalyzers": true,
+  "omnisharp.enableEditorConfigSupport": true,
+  "omnisharp.path": "latest",
+  "omnisharp.defaultLaunchSolution": "RemitMon.sln",
+  "dotnet.defaultSolution": "RemitMon.sln",
+  "dotnet.inlayHints.enableInlayHintsForParameters": false,
+  "dotnet.inlayHints.enableInlayHintsForLiteralParameters": false,
+  "dotnet.inlayHints.enableInlayHintsForObjectCreationParameters": false,
+  "dotnet.inlayHints.enableInlayHintsForIndexerParameters": false,
+  "dotnet.inlayHints.enableInlayHintsForMethodReturnTypes": false,
+  "dotnet.inlayHints.enableInlayHintsForImplicitVariableTypes": false,
+  "dotnet.inlayHints.enableInlayHintsForLambdaParameterTypes": false,
+  "dotnet.inlayHints.enableInlayHintsForTypes": false,
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
+

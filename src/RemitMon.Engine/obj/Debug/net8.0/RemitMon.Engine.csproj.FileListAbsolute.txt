@@ -1,0 +1,11 @@
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine/bin/Debug/net8.0/RemitMon.Engine.deps.json
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine/bin/Debug/net8.0/RemitMon.Engine.dll
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine/bin/Debug/net8.0/RemitMon.Engine.pdb
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine/obj/Debug/net8.0/RemitMon.Engine.GeneratedMSBuildEditorConfig.editorconfig
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine/obj/Debug/net8.0/RemitMon.Engine.AssemblyInfoInputs.cache
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine/obj/Debug/net8.0/RemitMon.Engine.AssemblyInfo.cs
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine/obj/Debug/net8.0/RemitMon.Engine.csproj.CoreCompileInputs.cache
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine/obj/Debug/net8.0/RemitMon.Engine.dll
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine/obj/Debug/net8.0/refint/RemitMon.Engine.dll
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine/obj/Debug/net8.0/RemitMon.Engine.pdb
+/Users/garylazarus/Source/Remit Monitor/src/RemitMon.Engine/obj/Debug/net8.0/ref/RemitMon.Engine.dll
