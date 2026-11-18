@@ -2137,3 +2137,31 @@ VALUES (@p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35, @p36, @p37, 
 2026-11-18 15:45:37.207 -05:00 [INF] Executed endpoint 'HTTP: GET /health'
 2026-11-18 15:45:37.208 -05:00 [INF] HTTP GET /health responded 200 in 20.1271 ms
 2026-11-18 15:45:37.209 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/health - 200 null application/json; charset=utf-8 62.0527ms
+2026-11-18 15:47:13.044 -05:00 [INF] Executed DbCommand (50ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE WHEN COUNT(*) = 0 THEN FALSE ELSE TRUE END
+FROM pg_class AS cls
+JOIN pg_namespace AS ns ON ns.oid = cls.relnamespace
+WHERE
+        cls.relkind IN ('r', 'v', 'm', 'f', 'p') AND
+        ns.nspname NOT IN ('pg_catalog', 'information_schema') AND
+        -- Exclude tables which are members of PG extensions
+        NOT EXISTS (
+            SELECT 1 FROM pg_depend WHERE
+                classid=(
+                    SELECT cls.oid
+                    FROM pg_class AS cls
+                             JOIN pg_namespace AS ns ON ns.oid = cls.relnamespace
+                    WHERE relname='pg_class' AND ns.nspname='pg_catalog'
+                ) AND
+                objid=cls.oid AND
+                deptype IN ('e', 'x')
+        )
+2026-11-18 15:47:13.189 -05:00 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM banks AS b)
+2026-11-18 15:47:13.202 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-18 15:47:13.273 -05:00 [INF] Now listening on: http://localhost:5199
+2026-11-18 15:47:13.274 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-18 15:47:13.274 -05:00 [INF] Hosting environment: Development
+2026-11-18 15:47:13.274 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api

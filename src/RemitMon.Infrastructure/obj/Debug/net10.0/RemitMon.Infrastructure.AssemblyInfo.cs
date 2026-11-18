@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RemitMon.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dfeec06fe5b0c0e42fd83cd14e39d50046a92530")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4736c06796f5356fbda3cf1e557a5211aabb13f2")]
 [assembly: System.Reflection.AssemblyProductAttribute("RemitMon.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RemitMon.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

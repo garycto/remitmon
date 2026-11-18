@@ -2,7 +2,14 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Cleanup Port 5199",
+      "label": "Debug: Backend & Frontend",
+      "dependsOn": ["Start Backend API", "Start Frontend & Open Browser"],
+      "presentation": {
+        "echo": false,
+        "reveal": "silent"
+      },
+      "problemMatcher": []
+    },
       "type": "shell",
       "command": "lsof -i :5199 2>/dev/null | grep LISTEN | awk '{print $2}' | xargs -I {} kill -9 {} 2>/dev/null; true",
       "presentation": {
@@ -101,6 +108,18 @@
         "showReuseMessage": false,
         "clear": false
       }
+    },
+    {
+      "label": "Start Frontend & Open Browser",
+      "dependsOn": ["Start Frontend Dev Server"],
+      "type": "shell",
+      "command": "sleep 3 && open http://localhost:5174",
+      "presentation": {
+        "echo": false,
+        "reveal": "silent"
+      },
+      "problemMatcher": [],
+      "isBackground": false
     },
     {
       "label": "Open Frontend in Browser",

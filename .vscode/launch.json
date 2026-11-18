@@ -3,18 +3,13 @@
   "configurations": [
     {
       "name": "Debug: Run & Open Browser",
-      "type": "node",
+      "type": "shell",
       "request": "launch",
-      "preLaunchTask": "Start Backend API",
-      "postDebugTask": "Start Frontend Dev Server",
-      "skipFiles": ["<node_internals>/**"],
-      "serverReadyAction": {
-        "pattern": "Now listening on: http://localhost:5199",
-        "uriFormat": "http://localhost:5173",
-        "action": "openExternally"
-      },
+      "command": "echo",
+      "args": ["Starting RemitMon..."],
+      "preLaunchTask": "Debug: Backend & Frontend",
       "presentation": {
-        "hidden": false
+        "hidden": true
       }
     }
   ]
