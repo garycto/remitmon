@@ -65,14 +65,20 @@ In Supabase dashboard:
 
 ## 3️⃣ **Configure RemitMon**
 
-### Step 1: Update appsettings.json
-Edit `src/RemitMon.Api/appsettings.json`:
+### Step 1: Configure the database connection
+In the Supabase dashboard, select **Database → Connect → Session pooler** to get the IPv4-compatible connection details. Set the connection string in the repository-root `.env.local` file, which is loaded by the VS Code F5 launch configuration and excluded from Git:
+
+```dotenv
+ConnectionStrings__DefaultConnection=Host=[POOLER_HOST];Port=5432;Database=postgres;Username=postgres.[PROJECT_ID];Password=[DATABASE_PASSWORD];SSL Mode=Require
+```
+
+The API uses Npgsql key/value connection strings, not `postgresql://` URIs. Do not put database credentials in tracked settings files.
+
+### Step 2: Configure application settings
+Edit `src/RemitMon.Api/appsettings.json` for non-database application settings:
 
 ```json
 {
-  "ConnectionStrings": {
-    "DefaultConnection": "postgresql://postgres:[PASSWORD]@db.[PROJECT_ID].supabase.co:6543/postgres?sslmode=require"
-  },
   "Authentication": {
     "GitHub": {
       "ClientId": "YOUR_GITHUB_CLIENT_ID",
@@ -93,14 +99,15 @@ Edit `src/RemitMon.Api/appsettings.json`:
 ```
 
 Replace:
-- `[PASSWORD]` → Your Supabase database password
+- `[POOLER_HOST]` → The session pooler host shown in the Supabase dashboard
 - `[PROJECT_ID]` → Your Supabase project ID
+- `[DATABASE_PASSWORD]` → Your Supabase database password
 - `YOUR_GITHUB_CLIENT_ID` → From GitHub OAuth App
 - `YOUR_GITHUB_CLIENT_SECRET` → From GitHub OAuth App
 - `YOUR_ANON_KEY` → From Supabase Settings
 - `YOUR_SERVICE_ROLE_KEY` → From Supabase Settings
 
-### Step 2: Update Frontend Configuration
+### Step 3: Update Frontend Configuration
 Edit `web/src/lib/api.ts`:
 
 ```typescript
@@ -193,7 +200,7 @@ curl http://localhost:5000/auth/me \
 ✅ Use environment variables for sensitive config:
 
 ```bash
-export "ConnectionStrings__DefaultConnection=postgresql://..."
+export 'ConnectionStrings__DefaultConnection=Host=[POOLER_HOST];Port=5432;Database=postgres;Username=postgres.[PROJECT_ID];Password=[DATABASE_PASSWORD];SSL Mode=Require'
 export "Authentication__GitHub__ClientId=..."
 export "Authentication__GitHub__ClientSecret=..."
 
@@ -257,7 +264,7 @@ Your RemitMon project has access to:
 
 - Supabase Docs: https://supabase.com/docs
 - GitHub OAuth: https://docs.github.com/en/developers/apps/building-oauth-apps
-- RemitMon Architecture: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+- RemitMon Architecture: [ARCHITECTURE.md](ARCHITECTURE.md)
 
 ---
 

@@ -5,6 +5,7 @@ namespace RemitMon.Domain.Entities;
 public class PaymentEvent : AuditableEntity
 {
     public Guid AccountId { get; set; }
+    public string? ExternalEventId { get; set; }
     public Rail Rail { get; set; }
     public PaymentDirection Direction { get; set; }
     public PaymentInitiation Initiation { get; set; }

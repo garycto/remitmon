@@ -17,7 +17,7 @@ Key premises (do not deviate):
 2. RM acts at **point of payment**, not only at initiation. Inbound debits and requests are evaluated before posting/settlement wherever the rail allows.
 3. **RfP flows** have a native pause between request and payment. RM uses that pause for evaluation, human approval, and automated acceptance.
 4. **ACH pulls** are a primary use case: the payee initiates, the payer has no approval step. Recourse is **reject (return before posting)** or **reverse/return** where permitted.
-5. **Accounting webhooks** (QuickBooks first) announce invoice/bill creation or receipt, producing **expected obligations** before money moves. A matching debit/request is auto-cleared; one with no matching obligation is an exception.
+5. **Accounting webhooks** (QuickBooks first) announce invoice/bill creation or receipt, producing **expected obligations** before money moves. A matching debit/request is auto-cleared; one with no matching obligation requires approval.
 6. The bank distributes RM to its business customers. The prototype has three views: **Business**, **Bank**, and **Admin/Simulator**.
 
 This is a **prototype**. All bank, rail, and accounting integrations are behind interfaces with **simulator implementations** using fictional data. Nothing is sent to real banks, Jack Henry, Modern Treasury, or QuickBooks unless a real adapter is explicitly configured. Mark all simulated actions clearly in the UI ("Simulated").
@@ -62,7 +62,8 @@ Development environment: GitHub Codespaces (primary) and local. Provide `.devcon
     /RemitMon.Tests         xUnit (engine, api, integration)
   /web                      React + Vite app
   RemitMon.sln
-  README.md
+  /docs/PROJECT-OVERVIEW.md
+  /docs/README-DEMO.md
 ```
 
 ---
@@ -90,7 +91,7 @@ Use these entities (EF Core, snake_case table names, UUID primary keys, `created
 - `PaymentEvent` (id, account_id, rail, direction: `Inbound` | `Outbound`, initiation: `Push` | `Pull` | `RfP`, amount, currency, counterparty_ref (raw), counterparty_id?, ach_company_id?, ach_sec_code?, memo, reference, invoice_ref?, event_time, settlement_date?, raw_payload JSON, correlation_id)
 - `ExpectedObligation` (id, business_id, source: `QuickBooks` | `Simulator` | `Manual`, source_ref, counterparty_id?, counterparty_name, amount, due_date, status: `Open` | `Matched` | `Paid` | `Cancelled`, created_event_at, created_by_ext?, matched_payment_event_id?)
 - `Decision` (id, payment_event_id, policy_id, policy_version, outcome: `Allow` | `Reject` | `Escalate`, reasons JSON[] (rule ids + human text), evaluated_at, latency_ms, mode_applied: `Monitor` | `Enforce`, action_taken, action_status)
-- `Exception` (id, decision_id, status: `Open` | `Approved` | `Rejected` | `Expired`, assigned_to, expires_at, resolution_note, resolved_by, resolved_at)
+- `Approval` (id, decision_id, status: `Open` | `Approved` | `Rejected` | `Expired`, assigned_to, expires_at, resolution_note, resolved_by, resolved_at)
 - `ActionRecord` (id, decision_id, action: `Reject` | `Return` | `Reverse` | `Recall` | `HoldRfP` | `AcceptRfP` | `DeclineRfP`, rail, status: `Requested` | `Simulated` | `Succeeded` | `Failed` | `NotAvailable`, window_deadline, detail JSON)
 - `AuditEntry` (id, actor, actor_type: `User` | `System`, entity_type, entity_id, action, before JSON, after JSON, occurred_at, prev_hash, hash) — append-only, **hash-chained** (SHA-256 of prev_hash + canonical JSON). Add a verification endpoint.
 
@@ -156,7 +157,7 @@ Recourse by rail (encode as configuration, **not hard-coded**, because rules and
 | RTP / FedNow push | Allow/Block at point of payment; `Recall` request after the fact is bank-cooperation dependent | Mark `NotAvailable` or `Requested` |
 | Wire | Hold / `Recall` request | Bank-cooperation dependent |
 
-`ActionRecord.window_deadline` must be computed using a **banking-day calendar** service (`IBankingCalendar`, Federal Reserve holiday set seeded). The UI shows a countdown to the deadline for any pending exception that has a recourse window.
+`ActionRecord.window_deadline` must be computed using a **banking-day calendar** service (`IBankingCalendar`, Federal Reserve holiday set seeded). The UI shows a countdown to the deadline for any pending approval that has a recourse window.
 
 Escalation behavior:
 - RfP: pending until expiry; auto-decline on expiry (fail safe).
@@ -170,7 +171,7 @@ Escalation behavior:
 Define in `RemitMon.Infrastructure/Adapters`:
 
 ```csharp
-public interface IBankFeedAdapter        // Jack Henry-style: inbound ACH entries, RTP/FedNow/wire events, exception actions
+public interface IBankFeedAdapter        // Jack Henry-style: inbound ACH entries, RTP/FedNow/wire events, return actions
 public interface IPaymentOrchestrationAdapter // Modern Treasury-style: payment orders, counterparties, RfP, webhooks
 public interface IAccountingAdapter      // QuickBooks-style: bills, invoices, vendors, webhooks
 ```
@@ -197,10 +198,10 @@ Auth roles: `BusinessAdmin`, `BusinessApprover`, `BankAdmin`, `PlatformAdmin`.
 - Counterparties: CRUD, `POST /counterparties/{id}/approve|block`, `GET /counterparties/{id}/changes`
 - Obligations: `GET /obligations`, `POST /obligations` (manual), `GET /obligations/{id}`
 - Activity: `GET /events` (filters: rail, initiation, outcome, counterparty, date), `GET /events/{id}` (full explanation: rule hits, matched obligation, actions)
-- Exceptions: `GET /exceptions`, `POST /exceptions/{id}/approve`, `POST /exceptions/{id}/reject` (note required)
+- Approvals: `GET /approvals`, `POST /approvals/{id}/approve`, `POST /approvals/{id}/reject` (note required)
 - Actions: `GET /actions`
 - Audit: `GET /audit`, `GET /audit/verify` (re-computes hash chain)
-- Bank view: `GET /bank/overview` (customers, protected accounts, blocked totals, exception SLAs), `GET /bank/customers/{id}`
+- Bank view: `GET /bank/overview` (customers, protected accounts, blocked totals, approval SLAs), `GET /bank/customers/{id}`
 - Simulator (PlatformAdmin, disabled in Live mode): `POST /sim/scenarios/{name}/run`, `POST /sim/events` (custom), `POST /sim/reset`, `GET /sim/scenarios`
 - Health: `/health/live`, `/health/ready`
 
@@ -210,14 +211,14 @@ Standards: ProblemDetails errors, FluentValidation, pagination (`?page&pageSize`
 
 ## 9. Frontend (`/web`)
 
-Style: clean, dense, "security console" feel; light/dark; accessible (WCAG AA). A persistent banner when `Integrations:Mode = Simulator`: "Prototype — simulated data. No real payments or bank actions."
+Style: clean, dense, "security console" feel; light/dark; accessible (WCAG AA). Simulated actions are identified as simulated.
 
 ### Views and pages
 
 **Business view**
-1. **Dashboard** — account protection status (Monitor/Enforce), today's allowed / rejected / escalated counts and dollars, open exceptions with countdown timers, expected obligations due soon, blocked-exposure chart (Recharts), recent webhook-driven alerts ("New bill created: Vendor X, $4,200").
+1. **Dashboard** — account protection status (Monitor/Enforce), today's allowed / rejected / escalated counts and dollars, open approvals with countdown timers, expected obligations due soon, blocked-exposure chart (Recharts), recent webhook-driven alerts ("New bill created: Vendor X, $4,200").
 2. **Activity** — table of payment events with outcome badges; row drawer with the full rule-hit explanation, matched obligation, raw payload, and actions taken.
-3. **Exceptions / Approvals** — queue with context (counterparty, amount, matched/unmatched obligation, risk signals, deadline). Approve / Reject with required note. Keyboard shortcuts.
+3. **Approvals** — queue with context (counterparty, amount, matched/unmatched obligation, risk signals, deadline). Approve / Reject with required note. Keyboard shortcuts.
 4. **Policies** — hierarchical editor (Account → Counterparty → Payment type → Transaction override). Rule builder forms per rule type, validation, inline "test a payment" panel, backtest results, version history with diff, four-eyes approval flow.
 5. **Counterparties** — list, status, ACH company IDs, bank-detail change history, approve/block.
 6. **Obligations** — expected obligations from accounting with match status.
@@ -225,12 +226,12 @@ Style: clean, dense, "security console" feel; light/dark; accessible (WCAG AA). 
 8. **Audit** — searchable audit log with "Verify chain" button.
 
 **Bank view**
-9. **Bank Overview** — portfolio of business customers, protected accounts, blocked dollars, exceptions by SLA, rail mix, mode adoption. Read-only drill-in per customer. Ability to set bank-level **Locked** baseline rules and `FailSafeOutcome` defaults.
+9. **Bank Overview** — portfolio of business customers, protected accounts, blocked dollars, approvals by SLA, rail mix, mode adoption. Read-only drill-in per customer. Ability to set bank-level **Locked** baseline rules and `FailSafeOutcome` defaults.
 
 **Admin / Simulator view**
 10. **Scenario runner** — buttons for each scenario (Section 11), live event stream, reset.
 
-Frontend rules: generate a typed API client from the OpenAPI spec (`openapi-typescript`); TanStack Query for data; polling every 5s on Dashboard/Exceptions (SignalR optional later); no business logic in the browser except display formatting.
+Frontend rules: generate a typed API client from the OpenAPI spec (`openapi-typescript`); TanStack Query for data; polling every 5s on Dashboard/Approvals (SignalR optional later); no business logic in the browser except display formatting.
 
 ---
 
@@ -277,10 +278,10 @@ GitHub Actions: `ci.yml` (restore, build, test, OpenAPI spec generation and diff
 1. Solution scaffold, devcontainer, CI skeleton, README.
 2. `RemitMon.Domain` entities and enums; EF Core DbContext, migrations, seed data.
 3. `RemitMon.Engine`: rule types, resolution semantics, matching service, banking calendar interface. **Write the xUnit tests alongside**, including golden files and a test per scenario in Section 11.
-4. API host: auth (dev + Entra), tenancy filter, controllers for accounts, policies, counterparties, obligations, events, exceptions, audit (hash chain + verify).
+4. API host: auth (dev + Entra), tenancy filter, controllers for accounts, policies, counterparties, obligations, events, approvals, audit (hash chain + verify).
 5. Ingestion pipeline: webhook endpoints, Service Bus abstraction (in-memory + Azure), worker that evaluates and records decisions and actions.
 6. Adapters: simulator implementations, real stubs, scenario runner endpoints.
-7. Frontend: shell, auth, typed client, then pages in this order: Dashboard, Activity, Exceptions, Policies, Counterparties, Obligations, Bank Overview, Simulator, Audit, Integrations.
+7. Frontend: shell, auth, typed client, then pages in this order: Dashboard, Activity, Approvals, Policies, Counterparties, Obligations, Bank Overview, Simulator, Audit, Integrations.
 8. Playwright smoke tests (ach-pull-over-limit approve flow; policy draft → approve → activate; monitor → enforce switch).
 9. Bicep infra and deploy workflows.
 10. `docs/ARCHITECTURE.md` (include a sequence diagram per rail type) and `docs/DECISIONS.md`.
@@ -295,7 +296,7 @@ GitHub Actions: `ci.yml` (restore, build, test, OpenAPI spec generation and diff
 - The audit chain verifies; tampering with a row in a test causes `/audit/verify` to fail.
 - No code path returns `Allow` when the engine throws or required data is missing.
 - Switching an account from Monitor to Enforce changes actions taken but not decisions computed for identical input.
-- UI shows the Simulator banner whenever `Integrations:Mode = Simulator`, and no simulated action is presented as a real bank action.
+- No simulated action is presented as a real bank action.
 - `docs/openapi.json` is generated and CI fails on unreviewed drift.
 
 ---
@@ -303,6 +304,6 @@ GitHub Actions: `ci.yml` (restore, build, test, OpenAPI spec generation and diff
 ## 15. Explicit assumptions (verify before any live use)
 
 - ACH return and reversal windows, RfP expiry behavior, and which actions each bank/core exposes vary by institution and are held in configuration, not code.
-- Returning or rejecting ACH entries requires bank-side exception-processing access; the prototype simulates this through `IBankFeedAdapter`.
+- Returning or rejecting ACH entries requires bank-side return-processing access; the prototype simulates this through `IBankFeedAdapter`.
 - Real Jack Henry, Modern Treasury, and QuickBooks integrations are out of scope for the prototype; only interfaces, stubs, and simulators are built.
 - Coverage of unsolicited credit pushes depends on bank enforcement of RM as a required path; the prototype models this as the `Monitor`/`Enforce` account mode and policy scope.

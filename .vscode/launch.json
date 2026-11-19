@@ -3,12 +3,15 @@
   "configurations": [
     {
       "name": "Debug: Run & Open Browser",
-      "type": "node",
+      "type": "coreclr",
       "request": "launch",
-      "program": "${workspaceFolder}/src/RemitMon.Api/Program.cs",
+      "program": "${workspaceFolder}/src/RemitMon.Api/bin/Debug/net10.0/RemitMon.Api.dll",
+      "cwd": "${workspaceFolder}/src/RemitMon.Api",
       "preLaunchTask": "Debug: Backend & Frontend",
-      "presentation": {
-        "hidden": true
+      "envFile": "${workspaceFolder}/.env.local",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:5199"
       }
     }
   ]

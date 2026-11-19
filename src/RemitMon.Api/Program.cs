@@ -6,8 +6,51 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using Azure.Identity;
+using RemitMon.Infrastructure.Adapters;
+
+// Load a repository-local environment file only for Development.
+// This is configuration loading, not secret logging.
+var aspnetEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+if (string.Equals(aspnetEnvironment, "Development", StringComparison.OrdinalIgnoreCase)
+    || string.IsNullOrWhiteSpace(aspnetEnvironment))
+{
+    var candidates = new[]
+    {
+        Path.Combine(Directory.GetCurrentDirectory(), ".env.local"),
+        Path.Combine(Directory.GetCurrentDirectory(), "local.env"),
+        Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", ".env.local")),
+        Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "local.env")),
+        Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..", ".env.local")),
+        Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..", "local.env"))
+    };
+    var localEnvironmentFile = candidates.FirstOrDefault(File.Exists);
+    if (localEnvironmentFile is not null)
+    {
+        foreach (var line in File.ReadAllLines(localEnvironmentFile))
+        {
+            var trimmed = line.Trim();
+            if (trimmed.Length == 0 || trimmed.StartsWith('#'))
+                continue;
+            var separator = trimmed.IndexOf('=');
+            if (separator <= 0)
+                continue;
+            var key = trimmed[..separator].Trim();
+            var value = trimmed[(separator + 1)..].Trim();
+            if (Environment.GetEnvironmentVariable(key) is null)
+                Environment.SetEnvironmentVariable(key, value);
+        }
+    }
+}
 
 var builder = WebApplication.CreateBuilder(args);
+
+var keyVaultUrl = builder.Configuration["KeyVault:Url"];
+if (!string.IsNullOrWhiteSpace(keyVaultUrl)
+    && Uri.TryCreate(keyVaultUrl, UriKind.Absolute, out var keyVaultUri))
+{
+    builder.Configuration.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential());
+}
 
 // Configure Serilog
 builder.Host.UseSerilog((context, loggerConfig) =>
@@ -28,7 +71,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins(corsOrigin)
+        policy.WithOrigins(
+                corsOrigin,
+                "http://localhost:5173",
+                "http://127.0.0.1:5173")
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials();
@@ -47,6 +93,42 @@ builder.Services
 
 // Add Authorization
 builder.Services.AddAuthorization();
+
+builder.Services
+    .AddOptions<ModernTreasuryOptions>()
+    .Configure(options =>
+    {
+        builder.Configuration.GetSection(ModernTreasuryOptions.SectionName).Bind(options);
+        options.IntegrationsMode = builder.Configuration["Integrations:Mode"];
+    })
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+builder.Services
+    .AddOptions<JackHenryOptions>()
+    .Configure(options =>
+    {
+        builder.Configuration.GetSection(JackHenryOptions.SectionName).Bind(options);
+        options.IntegrationsMode = builder.Configuration["JackHenry:Mode"] ?? "Simulator";
+    })
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+builder.Services.AddTransient<ModernTreasuryRetryHandler>();
+builder.Services
+    .AddHttpClient<RealModernTreasuryAdapter>()
+    .AddHttpMessageHandler<ModernTreasuryRetryHandler>();
+builder.Services
+    .AddHttpClient<RealJackHenryAdapter>()
+    .AddHttpMessageHandler<ModernTreasuryRetryHandler>();
+builder.Services.AddScoped<SimulatorPaymentOrchestrationAdapter>();
+builder.Services.AddScoped<IPaymentOrchestrationAdapter>(serviceProvider =>
+{
+    var options = serviceProvider.GetRequiredService<Microsoft.Extensions.Options.IOptions<ModernTreasuryOptions>>().Value;
+    return options.IsLive
+        ? serviceProvider.GetRequiredService<RealModernTreasuryAdapter>()
+        : serviceProvider.GetRequiredService<SimulatorPaymentOrchestrationAdapter>();
+});
 
 // Add DbContext with Supabase connection
 var connString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -67,14 +149,15 @@ builder.Services.AddDbContext<RemitMonDbContext>(options =>
 
 var app = builder.Build();
 
-// Apply migrations and seed demo data
+// Initialize the database and seed demo data
 using (var scope = app.Services.CreateScope())
 {
     try
     {
         var db = scope.ServiceProvider.GetRequiredService<RemitMonDbContext>();
         db.Database.EnsureCreated();
-        
+        db.Database.ExecuteSqlRaw(ApprovalSchemaMigration.RenameLegacyTableSql);
+
         // Seed demo data in development
         if (app.Environment.IsDevelopment())
         {
@@ -84,7 +167,8 @@ using (var scope = app.Services.CreateScope())
     catch (Exception ex)
     {
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-        logger.LogWarning("Could not initialize database: {Message}", ex.Message);
+        logger.LogError(ex, "Database initialization failed");
+        logger.LogWarning("The API will continue with database-backed endpoints unavailable.");
     }
 }
 
@@ -130,7 +214,9 @@ app.MapGet("/auth/logout", async (HttpContext context) =>
 app.MapAccountEndpoints();
 app.MapPolicyEndpoints();
 app.MapCounterpartyEndpoints();
-app.MapExceptionEndpoints();
+app.MapApprovalEndpoints();
+app.MapDashboardEndpoints();
+app.MapModernTreasuryEndpoints();   // the only new line
+app.MapJackHenryEndpoints();
 
 app.Run();
-

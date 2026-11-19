@@ -426,7 +426,7 @@ namespace RemitMon.Infrastructure.Migrations
                     b.ToTable("decisions");
                 });
 
-            modelBuilder.Entity("RemitMon.Domain.Entities.Exception", b =>
+            modelBuilder.Entity("RemitMon.Domain.Entities.Approval", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -473,7 +473,7 @@ namespace RemitMon.Infrastructure.Migrations
 
                     b.HasIndex("DecisionId");
 
-                    b.ToTable("exceptions");
+                    b.ToTable("approvals");
                 });
 
             modelBuilder.Entity("RemitMon.Domain.Entities.ExpectedObligation", b =>
@@ -484,7 +484,8 @@ namespace RemitMon.Infrastructure.Migrations
                         .HasColumnName("id");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("numeric")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
                         .HasColumnName("amount");
 
                     b.Property<Guid>("BusinessCustomerId")
@@ -568,7 +569,8 @@ namespace RemitMon.Infrastructure.Migrations
                         .HasColumnName("ach_sec_code");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("numeric")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
                         .HasColumnName("amount");
 
                     b.Property<string>("CorrelationId")
@@ -599,6 +601,10 @@ namespace RemitMon.Infrastructure.Migrations
                     b.Property<DateTime>("EventTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("event_time");
+
+                    b.Property<string>("ExternalEventId")
+                        .HasColumnType("text")
+                        .HasColumnName("external_event_id");
 
                     b.Property<int>("Initiation")
                         .HasColumnType("integer")
@@ -637,6 +643,9 @@ namespace RemitMon.Infrastructure.Migrations
                     b.HasIndex("AccountId");
 
                     b.HasIndex("CounterpartyId");
+
+                    b.HasIndex("ExternalEventId")
+                        .IsUnique();
 
                     b.ToTable("payment_events");
                 });
@@ -878,10 +887,10 @@ namespace RemitMon.Infrastructure.Migrations
                     b.Navigation("Policy");
                 });
 
-            modelBuilder.Entity("RemitMon.Domain.Entities.Exception", b =>
+            modelBuilder.Entity("RemitMon.Domain.Entities.Approval", b =>
                 {
                     b.HasOne("RemitMon.Domain.Entities.Decision", "Decision")
-                        .WithMany("Exceptions")
+                        .WithMany("Approvals")
                         .HasForeignKey("DecisionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1002,7 +1011,7 @@ namespace RemitMon.Infrastructure.Migrations
                 {
                     b.Navigation("Actions");
 
-                    b.Navigation("Exceptions");
+                    b.Navigation("Approvals");
                 });
 
             modelBuilder.Entity("RemitMon.Domain.Entities.PaymentEvent", b =>

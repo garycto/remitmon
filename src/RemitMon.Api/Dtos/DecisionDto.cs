@@ -30,7 +30,7 @@ public record PaymentEventDto(
     DateTime? SettlementDate
 );
 
-public record ExceptionDto(
+public record ApprovalDto(
     Guid Id,
     Guid DecisionId,
     string Status,
@@ -39,11 +39,11 @@ public record ExceptionDto(
     DateTime CreatedAt
 );
 
-public record ApproveExceptionRequest(
+public record ApproveApprovalRequest(
     string Note
 );
 
-public record RejectExceptionRequest(
+public record RejectApprovalRequest(
     string Note,
     string Reason
 );

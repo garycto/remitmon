@@ -10,7 +10,7 @@ RemitMon is a bank-distributed account protection platform built on a layered ar
 │        ├─ Dashboard (activity overview)             │
 │        ├─ Accounts (account management)             │
 │        ├─ Policies (rule builder)                   │
-│        └─ Exceptions (approval queue)               │
+│        └─ Approvals (review queue)                  │
 └──────────────────┬──────────────────────────────────┘
                    │ HTTP/REST (OpenAPI)
 ┌──────────────────▼──────────────────────────────────┐
@@ -18,7 +18,7 @@ RemitMon is a bank-distributed account protection platform built on a layered ar
 │        ├─ Account Endpoints                         │
 │        ├─ Policy Endpoints                          │
 │        ├─ Counterparty Endpoints                    │
-│        ├─ Exception Endpoints                       │
+│        ├─ Approval Endpoints                        │
 │        └─ Health/Status Endpoints                   │
 └──────────────────┬──────────────────────────────────┘
                    │
@@ -87,9 +87,10 @@ POST       /api/v1/counterparties/{id}/approve
 POST       /api/v1/counterparties/{id}/block
 GET        /api/v1/counterparties/{id}/changes
 
-GET/POST   /api/v1/exceptions
-POST       /api/v1/exceptions/{id}/approve
-POST       /api/v1/exceptions/{id}/reject
+GET        /api/v1/approvals
+GET        /api/v1/approvals/{id}
+POST       /api/v1/approvals/{id}/approve
+POST       /api/v1/approvals/{id}/reject
 
 GET        /health
 ```
@@ -176,7 +177,7 @@ EvaluationResult {
 - `PaymentEvent` — Inbound/outbound transactions
 - `ExpectedObligation` — Accounting integration events
 - `Decision` — Policy evaluation outcome
-- `Exception` — Escalations requiring approval
+- `Approval` — Escalations requiring approval
 - `ActionRecord` — Recourse actions (Reject, Return, Reverse, etc.)
 - `AuditEntry` — Hash-chained audit log
 
@@ -187,7 +188,7 @@ EvaluationResult {
 - PolicyStatus
 - Rail, PaymentDirection, PaymentInitiation
 - DecisionOutcome, ActionType, ActionStatus
-- ExceptionStatus, ExpectedObligationStatus/Source
+- ApprovalStatus, ExpectedObligationStatus/Source
 - BusinessCustomerStatus
 
 ### 4. Infrastructure Layer (`/src/RemitMon.Infrastructure`)
@@ -222,7 +223,7 @@ PaymentEvent (1) ──┬─ Counterparty
                    ├─ Decision (n)
                    └─ ExpectedObligation
 
-Decision (1) ──┬─ Exception (n)
+Decision (1) ──┬─ Approval (n)
                └─ ActionRecord (n)
 
 Counterparty (1) ─── CounterpartyChangeLog (n)
@@ -290,7 +291,7 @@ POST /webhooks/bank/{provider}
 
 3. Decision handling
    └─ If Escalate
-      └─ Create Exception (open, assigned, with deadline)
+      └─ Create Approval (open, assigned, with deadline)
          └─ Notify approver
             └─ Await manual approval
    └─ Else if Enforce mode
@@ -322,7 +323,7 @@ Decision Outcome:
      ├─ RfP: hold until expiry, auto-decline on timeout
      ├─ ACH pull: hold until pre-posting cutoff, auto-reject at cutoff
      ├─ Push rails: reject with resubmit flag (no indefinite hold)
-     └─ Create Exception → human approval/rejection
+     └─ Create Approval → human approval/rejection
 ```
 
 ## Deployment Architecture
@@ -389,7 +390,7 @@ Resource Group
 
 **Roles:**
 - `BusinessAdmin` — Full account control
-- `BusinessApprover` — Approve exceptions and policies
+- `BusinessApprover` — Approve requests and policies
 - `BankAdmin` — Bank-level oversight
 - `PlatformAdmin` — System administration
 
@@ -448,7 +449,7 @@ Resource Group
 - Playwright: 3 smoke flows
   - Business user logs in, views dashboard, creates account
   - Policy creation and rule configuration
-  - Exception approval workflow
+  - Approval workflow
 
 ## Development Workflow
 
@@ -466,7 +467,7 @@ Resource Group
 
 ## Technical Decisions
 
-See `docs/DECISIONS.md` for detailed rationale on:
+See `DECISIONS.md` for detailed rationale on:
 - Minimal APIs vs controllers
 - Snake_case table naming
 - UUID primary keys

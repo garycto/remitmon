@@ -27,8 +27,8 @@ export const Navbar: React.FC<NavbarProps> = ({ isDark, onToggleDark }) => {
             <a href="/policies" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
               Policies
             </a>
-            <a href="/exceptions" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-              Exceptions
+            <a href="/approvals" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+              Approvals
             </a>
             <button
               onClick={onToggleDark}
@@ -66,8 +66,8 @@ export const Navbar: React.FC<NavbarProps> = ({ isDark, onToggleDark }) => {
             <a href="/policies" className="block py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600">
               Policies
             </a>
-            <a href="/exceptions" className="block py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600">
-              Exceptions
+            <a href="/approvals" className="block py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600">
+              Approvals
             </a>
           </div>
         )}

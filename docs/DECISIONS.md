@@ -31,3 +31,11 @@
 ## Status Enumerations
 **Decision**: Separate enums for each entity status (AccountStatus, PolicyStatus, etc.).
 **Rationale**: Type-safe, explicit, and easier to extend.
+
+## Modern Treasury Authentication
+**Decision**: Use HTTP Basic authentication with the Organization ID as username and sandbox/production API key as password.
+**Rationale**: Current Modern Treasury documentation requires Basic authentication over HTTPS. The API key and organization ID are never logged or committed.
+
+## Jack Henry Payments Orchestrator Authentication
+**Decision**: Use the Payments Orchestrator staged API with a JWT signed by an RSA private key. The API key is used as the JWT subject and issuer, and API requests use `Authorization: Token <jwt>`.
+**Rationale**: Current Jack Henry Payments Orchestrator documentation requires JWTs signed with the registered private key. Credentials and PEM files remain outside source control. This first implementation is read-only and uses configurable staging endpoints for counterparties, transactions, and payments.

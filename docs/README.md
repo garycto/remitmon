@@ -51,6 +51,11 @@ npm run dev
 
 Frontend runs at `http://localhost:5173`
 
+## Project Guides
+
+- [Project overview](PROJECT-OVERVIEW.md)
+- [Demo guide](README-DEMO.md)
+
 ### Authentication Flow
 
 1. Click **"Login with GitHub"** in the UI
@@ -64,7 +69,7 @@ Frontend runs at `http://localhost:5173`
 /remitmon
   /.devcontainer          # VS Code dev container config
   /.github/workflows      # CI/CD pipelines
-  /docs                   # Architecture & decision docs
+  /docs                   # Project guides, setup, architecture & decisions
   /infra                  # Bicep IaC for Azure deployment
   /src
     /RemitMon.Api         # ASP.NET Core host, controllers
@@ -74,14 +79,16 @@ Frontend runs at `http://localhost:5173`
     /RemitMon.Infrastructure # EF Core, adapters, database
   /web                    # React + TypeScript frontend
   RemitMon.sln            # Solution file
-  README.md               # This file
-  SUPABASE_SETUP.md       # Detailed Supabase setup guide
+  docs/README.md          # Documentation index
+  docs/PROJECT-OVERVIEW.md
+  docs/README-DEMO.md
+  docs/SUPABASE_SETUP.md  # Detailed Supabase setup guide
 ```
 
 ## Architecture Layers
 
 ### 1. Domain Layer (`RemitMon.Domain`)
-- **15 Entities**: Bank, BusinessCustomer, Account, User, Counterparty, Policy, PolicyRule, PaymentEvent, ExpectedObligation, Decision, Exception, ActionRecord, AuditEntry
+- **15 Entities**: Bank, BusinessCustomer, Account, User, Counterparty, Policy, PolicyRule, PaymentEvent, ExpectedObligation, Decision, Approval, ActionRecord, AuditEntry
 - **13 Enums**: For type-safe status values across all entities
 - Pure domain model with no external dependencies
 
@@ -100,7 +107,7 @@ Frontend runs at `http://localhost:5173`
 ### 4. API Layer (`RemitMon.Api`)
 - Minimal APIs with OpenAPI/Swagger documentation
 - GitHub OAuth authentication
-- REST endpoints for accounts, policies, counterparties, exceptions
+- REST endpoints for accounts, policies, counterparties, approvals
 - Serilog structured logging
 - CORS configured for frontend
 
@@ -133,11 +140,11 @@ Frontend runs at `http://localhost:5173`
 - `POST /api/v1/counterparties/{id}/block` — Block counterparty
 - `GET /api/v1/counterparties/{id}/changes` — Get change history
 
-### Exceptions
-- `GET /api/v1/exceptions` — List all exceptions
-- `GET /api/v1/exceptions/{id}` — Get exception details
-- `POST /api/v1/exceptions/{id}/approve` — Approve exception
-- `POST /api/v1/exceptions/{id}/reject` — Reject exception
+### Approvals
+- `GET /api/v1/approvals` — List all approvals
+- `GET /api/v1/approvals/{id}` — Get approval details
+- `POST /api/v1/approvals/{id}/approve` — Approve request
+- `POST /api/v1/approvals/{id}/reject` — Reject request
 
 ### Health
 - `GET /health` — Health check
@@ -186,7 +193,7 @@ Frontend runs at `http://localhost:5173`
 - `PaymentEvent` — Inbound/outbound transactions
 - `ExpectedObligation` — Accounting integration events
 - `Decision` — Policy evaluation outcome
-- `Exception` — Escalations requiring human approval
+- `Approval` — Escalations requiring human approval
 - `ActionRecord` — Recourse actions (Reject, Reverse, etc.)
 - `AuditEntry` — Hash-chained audit log
 
@@ -260,7 +267,7 @@ az deployment group create \
 
 ## Development Decisions
 
-See [`docs/DECISIONS.md`](docs/DECISIONS.md) for technical decisions and rationale.
+See [`DECISIONS.md`](DECISIONS.md) for technical decisions and rationale.
 
 ### Key Decisions:
 - **Minimal APIs** over controllers for cleaner separation

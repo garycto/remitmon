@@ -3,83 +3,42 @@
   "tasks": [
     {
       "label": "Debug: Backend & Frontend",
-      "dependsOn": ["Start Backend API", "Start Frontend & Open Browser"],
-      "presentation": {
-        "echo": false,
-        "reveal": "silent"
-      },
+      "dependsOn": [
+        "Cleanup Port 5199",
+        "Cleanup Port 5173",
+        "Build Backend (Debug)",
+        "Start Frontend Dev Server",
+        "Open Frontend"
+      ],
+      "dependsOrder": "sequence",
       "problemMatcher": []
     },
+    {
+      "label": "Cleanup Port 5199",
       "type": "shell",
       "command": "lsof -i :5199 2>/dev/null | grep LISTEN | awk '{print $2}' | xargs -I {} kill -9 {} 2>/dev/null; true",
-      "presentation": {
-        "echo": false,
-        "reveal": "silent"
-      },
       "problemMatcher": []
     },
     {
       "label": "Cleanup Port 5173",
       "type": "shell",
       "command": "lsof -i :5173 2>/dev/null | grep LISTEN | awk '{print $2}' | xargs -I {} kill -9 {} 2>/dev/null; true",
-      "presentation": {
-        "echo": false,
-        "reveal": "silent"
-      },
       "problemMatcher": []
     },
     {
-      "label": "Debug Backend API",
-      "dependsOn": ["Cleanup Port 5199"],
-      "type": "shell",
-      "command": "/bin/bash",
-      "args": [
-        "-c",
-        "dotnet run --project src/RemitMon.Api --configuration Debug 2>&1 & sleep 15 && open 'http://localhost:5173' && wait"
-      ],
-      "isBackground": false,
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      }
-    },
-    {
-      "label": "Start Backend API",
-      "dependsOn": ["Cleanup Port 5199"],
-      "type": "shell",
+      "label": "Build Backend (Debug)",
+      "type": "process",
       "command": "dotnet",
-      "args": ["run", "--project", "src/RemitMon.Api"],
-      "isBackground": true,
-      "problemMatcher": {
-        "pattern": {
-          "regexp": "^.*$",
-          "file": 1,
-          "location": 2,
-          "message": 3
-        },
-        "background": {
-          "activeOnStart": true,
-          "beginsPattern": "^.*Building.*$",
-          "endsPattern": "^.*Now listening on:.*5199.*$"
-        }
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared",
-        "showReuseMessage": false,
-        "clear": false
-      },
-      "runOptions": {
-        "runOn": "folderOpen"
-      }
+      "args": [
+        "build",
+        "${workspaceFolder}/src/RemitMon.Api/RemitMon.Api.csproj",
+        "--configuration",
+        "Debug"
+      ],
+      "problemMatcher": "$msCompile"
     },
     {
       "label": "Start Frontend Dev Server",
-      "dependsOn": ["Cleanup Port 5173"],
       "type": "shell",
       "command": "npm",
       "args": ["run", "dev"],
@@ -89,10 +48,7 @@
       "isBackground": true,
       "problemMatcher": {
         "pattern": {
-          "regexp": "^.*$",
-          "file": 1,
-          "location": 2,
-          "message": 3
+          "regexp": "^.*$"
         },
         "background": {
           "activeOnStart": true,
@@ -110,33 +66,22 @@
       }
     },
     {
-      "label": "Start Frontend & Open Browser",
-      "dependsOn": ["Start Frontend Dev Server"],
-      "type": "shell",
-      "command": "sleep 3 && open http://localhost:5174",
-      "presentation": {
-        "echo": false,
-        "reveal": "silent"
-      },
-      "problemMatcher": [],
-      "isBackground": false
-    },
-    {
-      "label": "Open Frontend in Browser",
-      "type": "shell",
+      "label": "Open Frontend",
+      "type": "process",
       "command": "open",
       "args": ["http://localhost:5173"],
-      "presentation": {
-        "echo": false,
-        "reveal": "silent"
-      },
       "problemMatcher": []
     },
     {
       "label": "Build Backend (Release)",
-      "type": "shell",
+      "type": "process",
       "command": "dotnet",
-      "args": ["build", "--configuration", "Release"],
+      "args": [
+        "build",
+        "${workspaceFolder}/RemitMon.sln",
+        "--configuration",
+        "Release"
+      ],
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": true,

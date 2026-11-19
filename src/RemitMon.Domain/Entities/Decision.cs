@@ -17,6 +17,6 @@ public class Decision : AuditableEntity
     
     public PaymentEvent? PaymentEvent { get; set; }
     public Policy? Policy { get; set; }
-    public ICollection<Exception> Exceptions { get; set; } = new List<Exception>();
+    public ICollection<Approval> Approvals { get; set; } = new List<Approval>();
     public ICollection<ActionRecord> Actions { get; set; } = new List<ActionRecord>();
 }

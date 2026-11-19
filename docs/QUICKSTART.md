@@ -88,7 +88,7 @@ Ctrl+C  # (in both terminals)
 ## 📚 More Info
 
 - **Full setup guide**: [SUPABASE_SETUP.md](SUPABASE_SETUP.md)
-- **Architecture docs**: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+- **Architecture docs**: [ARCHITECTURE.md](ARCHITECTURE.md)
 - **API Docs**: http://localhost:5000/swagger (when running)
 
 ---

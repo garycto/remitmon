@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RemitMon.Domain.Entities;
 using RemitMon.Domain.Enums;
-using Exception = RemitMon.Domain.Entities.Exception;
-
 namespace RemitMon.Infrastructure;
 
 public class RemitMonDbContext : DbContext
@@ -20,7 +18,7 @@ public class RemitMonDbContext : DbContext
     public DbSet<PaymentEvent> PaymentEvents => Set<PaymentEvent>();
     public DbSet<ExpectedObligation> ExpectedObligations => Set<ExpectedObligation>();
     public DbSet<Decision> Decisions => Set<Decision>();
-    public DbSet<Exception> Exceptions => Set<Exception>();
+    public DbSet<Approval> Approvals => Set<Approval>();
     public DbSet<ActionRecord> ActionRecords => Set<ActionRecord>();
     public DbSet<AuditEntry> AuditEntries => Set<AuditEntry>();
 
@@ -84,10 +82,22 @@ public class RemitMonDbContext : DbContext
             .WithOne(d => d.PaymentEvent)
             .HasForeignKey(d => d.PaymentEventId);
 
+        modelBuilder.Entity<PaymentEvent>()
+            .HasIndex(pe => pe.ExternalEventId)
+            .IsUnique();
+
+        modelBuilder.Entity<PaymentEvent>()
+            .Property(pe => pe.Amount)
+            .HasPrecision(18, 2);
+
+        modelBuilder.Entity<ExpectedObligation>()
+            .Property(eo => eo.Amount)
+            .HasPrecision(18, 2);
+
         modelBuilder.Entity<Decision>()
-            .HasMany(d => d.Exceptions)
-            .WithOne(e => e.Decision)
-            .HasForeignKey(e => e.DecisionId);
+            .HasMany(d => d.Approvals)
+            .WithOne(approval => approval.Decision)
+            .HasForeignKey(approval => approval.DecisionId);
 
         modelBuilder.Entity<ActionRecord>()
             .HasOne(ar => ar.Decision)

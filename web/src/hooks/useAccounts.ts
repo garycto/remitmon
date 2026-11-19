@@ -7,11 +7,20 @@ export interface Account {
   bankId: string;
   displayName: string;
   maskedAccountNumber: string;
-  status: string;
-  mode: string;
+  status: string | number;
+  mode: string | number;
   createdAt: string;
   updatedAt: string;
 }
+
+const accountStatuses = ['Active', 'Inactive', 'Closed'];
+const accountModes = ['Monitor', 'Enforce'];
+
+export const accountStatusLabel = (status: Account['status']) =>
+  typeof status === 'number' ? accountStatuses[status] ?? `Unknown status (${status})` : status;
+
+export const accountModeLabel = (mode: Account['mode']) =>
+  typeof mode === 'number' ? accountModes[mode] ?? `Unknown mode (${mode})` : mode;
 
 export const useAccounts = () => {
   return useQuery({

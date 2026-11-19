@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RemitMon.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4736c06796f5356fbda3cf1e557a5211aabb13f2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82626c60a06d0eb1eba00613ebdf716817ed41d5")]
 [assembly: System.Reflection.AssemblyProductAttribute("RemitMon.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RemitMon.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,7 +1,7 @@
 import React from 'react';
-import { useAccounts } from '../hooks/useAccounts';
-import { Card } from './Card';
-import { LoadingSpinner } from './LoadingSpinner';
+import { accountModeLabel, accountStatusLabel, useAccounts } from '../hooks/useAccounts';
+import { Card } from '../components/Card';
+import { LoadingSpinner } from '../components/LoadingSpinner';
 
 export const AccountsPage: React.FC = () => {
   const { data: accounts, isLoading, error } = useAccounts();
@@ -17,7 +17,10 @@ export const AccountsPage: React.FC = () => {
       </div>
 
       <div className="grid gap-4">
-        {accounts?.map((account) => (
+        {accounts?.map((account) => {
+          const status = accountStatusLabel(account.status);
+          const mode = accountModeLabel(account.mode);
+          return (
           <Card key={account.id} className="hover:shadow-lg transition-shadow cursor-pointer">
             <div className="flex justify-between items-start">
               <div>
@@ -26,18 +29,18 @@ export const AccountsPage: React.FC = () => {
               </div>
               <div className="space-y-1 text-right">
                 <span className={`inline-block px-2 py-1 rounded text-xs font-semibold ${
-                  account.status === 'Active' 
+                  status === 'Active'
                     ? 'badge-green' 
                     : 'badge-red'
                 }`}>
-                  {account.status}
+                  {status}
                 </span>
                 <span className={`inline-block px-2 py-1 rounded text-xs font-semibold ml-2 ${
-                  account.mode === 'Enforce' 
+                  mode === 'Enforce'
                     ? 'badge-red' 
                     : 'badge-blue'
                 }`}>
-                  {account.mode}
+                  {mode}
                 </span>
               </div>
             </div>
@@ -45,7 +48,8 @@ export const AccountsPage: React.FC = () => {
               Created {new Date(account.createdAt).toLocaleDateString()}
             </p>
           </Card>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
