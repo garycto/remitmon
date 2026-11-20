@@ -29,7 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<AppShell />}>
             <Route index element={<Navigate to="/dashboard" replace />} />
-            <Route path="dashboard" element={roleRoute(['BusinessApprover', 'BusinessAdmin', 'PlatformAdmin'], <DashboardPage />)} />
+            <Route path="dashboard" element={roleRoute(['BusinessApprover', 'BusinessAdmin', 'BankAdmin', 'PlatformAdmin'], <DashboardPage />)} />
             <Route path="activity" element={roleRoute(['BusinessApprover', 'BusinessAdmin', 'BankAdmin', 'PlatformAdmin'], <ActivityPage />)} />
             <Route path="activity/:eventId" element={roleRoute(['BusinessApprover', 'BusinessAdmin', 'BankAdmin', 'PlatformAdmin'], <ActivityPage />)} />
             <Route path="approvals" element={roleRoute(['BusinessApprover', 'BusinessAdmin', 'BankAdmin', 'PlatformAdmin'], <ApprovalsPage />)} />
@@ -40,7 +40,7 @@ function App() {
             <Route path="counterparties/:counterpartyId" element={roleRoute(['BusinessApprover', 'BusinessAdmin', 'BankAdmin', 'PlatformAdmin'], <CounterpartiesPage />)} />
             <Route path="obligations" element={roleRoute(['BusinessApprover', 'BusinessAdmin', 'BankAdmin', 'PlatformAdmin'], <ObligationsPage />)} />
             <Route path="obligations/:obligationId" element={roleRoute(['BusinessApprover', 'BusinessAdmin', 'BankAdmin', 'PlatformAdmin'], <ObligationsPage />)} />
-            <Route path="accounts" element={roleRoute(['BusinessApprover', 'BusinessAdmin'], <AccountsPage />)} />
+            <Route path="accounts" element={roleRoute(['BusinessApprover', 'BusinessAdmin', 'BankAdmin', 'PlatformAdmin'], <AccountsPage />)} />
             <Route path="integrations" element={roleRoute(['BusinessAdmin', 'PlatformAdmin'], <IntegrationsPage />)} />
             <Route path="audit" element={roleRoute(['BusinessAdmin', 'BankAdmin', 'PlatformAdmin'], <AuditPage />)} />
             <Route path="bank/*" element={roleRoute(['BankAdmin', 'PlatformAdmin'], <BankPage />)} />

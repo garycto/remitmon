@@ -34,11 +34,18 @@ export interface PaymentActivity {
   policyId: string | null;
   policyName: string;
   ruleHits: string[];
+  achInstantEligible: boolean;
+  convertedToInstant: boolean;
 }
 
 interface DashboardActivity {
   expectedPayments: ExpectedPayment[];
   payments: PaymentActivity[];
+  achInstantOpportunity: {
+    eligible: number;
+    converted: number;
+    remaining: number;
+  };
 }
 
 interface ModernTreasuryPayment {
@@ -81,37 +88,40 @@ const mapModernTreasuryPayment = (payment: ModernTreasuryPayment): PaymentActivi
   policyId: null,
   policyName: 'External activity',
   ruleHits: ['Awaiting RemitMon policy evaluation'],
+  achInstantEligible: payment.rail.toLowerCase() === 'ach',
+  convertedToInstant: false,
 });
 
-export const useDashboardActivity = (accountId?: string) => {
+export const useDashboardActivity = (accountId?: string, accountIds: string[] = []) => {
   return useQuery({
-    queryKey: ['dashboard', 'activity', accountId ?? 'all'],
+    queryKey: ['dashboard', 'activity', accountId ?? 'all', accountIds],
     queryFn: async () => {
-      const accountParams = accountId ? { accountId } : undefined;
-      const mtParams = accountId ? { accountId } : undefined;
+      const ids = accountId ? [accountId] : accountIds;
+      const requests = ids.length ? ids : [undefined];
+      const results = await Promise.allSettled(requests.flatMap((id) => {
+        const params = id ? { accountId: id } : undefined;
+        return [
+          apiClient.get<DashboardActivity>('/dashboard/activity', { params }),
+          apiClient.get<ModernTreasuryPayment[]>('/modern-treasury/payment-orders', { params }),
+          apiClient.get<ModernTreasuryPayment[]>('/modern-treasury/incoming-payment-details', { params }),
+        ];
+      }));
 
-      const [dashboardResult, mtOrdersResult, mtIncomingResult] = await Promise.allSettled([
-        apiClient.get<DashboardActivity>('/dashboard/activity', { params: accountParams }),
-        apiClient.get<ModernTreasuryPayment[]>('/modern-treasury/payment-orders', { params: mtParams }),
-        apiClient.get<ModernTreasuryPayment[]>('/modern-treasury/incoming-payment-details', { params: mtParams }),
-      ]);
-
-      if (dashboardResult.status === 'rejected'
-          && mtOrdersResult.status === 'rejected'
-          && mtIncomingResult.status === 'rejected') {
+      if (results.every((result) => result.status === 'rejected')) {
         throw new Error('Unable to load Supabase demo activity or Modern Treasury sandbox activity.');
       }
 
-      const dashboard = dashboardResult.status === 'fulfilled' ? dashboardResult.value.data : {
-        expectedPayments: [],
-        payments: [],
-      };
-      const mtPayments = [
-        ...(mtOrdersResult.status === 'fulfilled' ? mtOrdersResult.value.data : []),
-        ...(mtIncomingResult.status === 'fulfilled' ? mtIncomingResult.value.data : []),
-      ].map(mapModernTreasuryPayment);
+      const dashboards = results.filter((result, index) =>
+        result.status === 'fulfilled' && index % 3 === 0
+      ) as PromiseFulfilledResult<{ data: DashboardActivity }>[];
+      const mtPayments = results
+        .filter((result, index) => result.status === 'fulfilled' && index % 3 !== 0)
+        .flatMap((result) => (result as PromiseFulfilledResult<{ data: ModernTreasuryPayment[] }>).value.data)
+        .map(mapModernTreasuryPayment);
 
-      const seen = new Set(dashboard.payments.map((payment) =>
+      const dashboardPayments = dashboards.flatMap((result) => result.value.data.payments);
+      const expectedPayments = dashboards.flatMap((result) => result.value.data.expectedPayments);
+      const seen = new Set(dashboardPayments.map((payment) =>
         `${payment.reference ?? ''}:${payment.eventTime}:${payment.amount}`));
       const uniqueMtPayments = mtPayments.filter((payment) => {
         const key = `${payment.reference ?? ''}:${payment.eventTime}:${payment.amount}`;
@@ -121,9 +131,22 @@ export const useDashboardActivity = (accountId?: string) => {
       });
 
       return {
-        expectedPayments: dashboard.expectedPayments,
-        payments: [...dashboard.payments, ...uniqueMtPayments]
+        expectedPayments,
+        payments: [...dashboardPayments, ...uniqueMtPayments]
           .sort((left, right) => new Date(right.eventTime).getTime() - new Date(left.eventTime).getTime()),
+        achInstantOpportunity: dashboards.reduce(
+          (total, result) => {
+            const opportunity = result.value.data.achInstantOpportunity;
+            return opportunity
+              ? {
+                  eligible: total.eligible + opportunity.eligible,
+                  converted: total.converted + opportunity.converted,
+                  remaining: total.remaining + opportunity.remaining,
+                }
+              : total;
+          },
+          { eligible: 0, converted: 0, remaining: 0 },
+        ),
       } satisfies DashboardActivity;
     },
   });

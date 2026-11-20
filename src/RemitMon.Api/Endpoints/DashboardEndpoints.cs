@@ -51,7 +51,6 @@ public static class DashboardEndpoints
 
         var payments = await paymentQuery
             .OrderByDescending(payment => payment.EventTime)
-            .Take(100)
             .ToListAsync();
 
         var accountIds = payments.Select(payment => payment.AccountId).Distinct().ToList();
@@ -71,40 +70,51 @@ public static class DashboardEndpoints
             obligation.MatchedPaymentEventId
         )).ToList();
 
+        var paymentDtos = payments.Select(payment =>
+        {
+            var obligation = FindMatchedObligation(payment, expectedDtos);
+            var policy = policies
+                .Where(candidate => candidate.AccountId == payment.AccountId)
+                .OrderByDescending(candidate => candidate.Version)
+                .FirstOrDefault();
+            var evaluation = EvaluatePayment(payment, policy, payments, obligation);
+            var achInstantEligible = IsAchInstantEligible(payment);
+            var convertedToInstant = IsConvertedToInstant(payment);
+            return new DashboardPaymentDto(
+                payment.Id,
+                payment.AccountId,
+                payment.Account!.DisplayName,
+                payment.Rail.ToString(),
+                payment.Direction.ToString(),
+                payment.Initiation.ToString(),
+                payment.Amount,
+                payment.Currency,
+                payment.CounterpartyRef,
+                payment.Memo,
+                payment.Reference,
+                payment.InvoiceRef,
+                payment.EventTime,
+                payment.SettlementDate,
+                obligation is null ? "Unmatched" : "Matched",
+                obligation?.Id,
+                obligation?.SourceRef,
+                evaluation.Outcome,
+                policy?.Id,
+                policy?.Name ?? "No active policy",
+                evaluation.RuleHits,
+                achInstantEligible,
+                convertedToInstant
+            );
+        }).ToList();
+
+        var eligible = paymentDtos.Count(payment => payment.AchInstantEligible);
+        var converted = paymentDtos.Count(payment => payment.AchInstantEligible && payment.ConvertedToInstant);
+        var achCount = paymentDtos.Count(payment => payment.Rail == Rail.ACH.ToString());
+
         return Results.Ok(new DashboardActivityDto(
             expectedDtos,
-            payments.Select(payment =>
-            {
-                var obligation = FindMatchedObligation(payment, expectedDtos);
-                var policy = policies
-                    .Where(candidate => candidate.AccountId == payment.AccountId)
-                    .OrderByDescending(candidate => candidate.Version)
-                    .FirstOrDefault();
-                var evaluation = EvaluatePayment(payment, policy, payments, obligation);
-                return new DashboardPaymentDto(
-                    payment.Id,
-                    payment.AccountId,
-                    payment.Account!.DisplayName,
-                    payment.Rail.ToString(),
-                    payment.Direction.ToString(),
-                    payment.Initiation.ToString(),
-                    payment.Amount,
-                    payment.Currency,
-                    payment.CounterpartyRef,
-                    payment.Memo,
-                    payment.Reference,
-                    payment.InvoiceRef,
-                    payment.EventTime,
-                    payment.SettlementDate,
-                    obligation is null ? "Unmatched" : "Matched",
-                    obligation?.Id,
-                    obligation?.SourceRef,
-                    evaluation.Outcome,
-                    policy?.Id,
-                    policy?.Name ?? "No active policy",
-                    evaluation.RuleHits
-                );
-            }).ToList()
+            paymentDtos,
+            new AchInstantOpportunityDto(eligible, converted, achCount - eligible)
         ));
     }
 
@@ -215,6 +225,24 @@ public static class DashboardEndpoints
         }
         hits.Add("Matched bill and no blocking rule hit");
         return new PaymentEvaluation("Allowed", hits);
+    }
+
+    private static bool IsAchInstantEligible(PaymentEvent payment)
+    {
+        if (payment.Rail != Rail.ACH)
+            return false;
+        if (payment.RawPayload.TryGetValue("achInstantEligible", out var value))
+            return value is bool eligible && eligible;
+        return payment.Amount <= 25_000m
+            && (payment.Memo is null
+                || !payment.Memo.Contains("fallback", StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static bool IsConvertedToInstant(PaymentEvent payment)
+    {
+        if (payment.RawPayload.TryGetValue("convertedToInstant", out var value))
+            return value is bool converted && converted;
+        return false;
     }
 
     private static decimal? GetDecimal(Dictionary<string, object> parameters, string name)

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, NavLink, Outlet, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Activity,
   AlertTriangle,
@@ -22,7 +22,7 @@ import { accountModeLabel, useAccounts } from '../hooks/useAccounts';
 import { useApprovals } from '../hooks/useApprovals';
 
 export type UserRole = 'BusinessApprover' | 'BusinessAdmin' | 'BankAdmin' | 'PlatformAdmin';
-export const activeRole: UserRole = 'BusinessAdmin';
+export const activeRole: UserRole = 'BankAdmin';
 
 interface NavigationItem {
   label: string;
@@ -32,12 +32,12 @@ interface NavigationItem {
 }
 
 const navigation: NavigationItem[] = [
-  { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, roles: ['BusinessApprover', 'BusinessAdmin', 'PlatformAdmin'] },
-  { label: 'Activity', path: '/activity', icon: Activity, roles: ['BusinessApprover', 'BusinessAdmin', 'BankAdmin', 'PlatformAdmin'] },
-  { label: 'Approvals', path: '/approvals', icon: AlertTriangle, roles: ['BusinessApprover', 'BusinessAdmin', 'BankAdmin', 'PlatformAdmin'] },
-  { label: 'Policies', path: '/policies', icon: FileText, roles: ['BusinessApprover', 'BusinessAdmin', 'BankAdmin', 'PlatformAdmin'] },
-  { label: 'Counterparties', path: '/counterparties', icon: Users, roles: ['BusinessApprover', 'BusinessAdmin', 'BankAdmin', 'PlatformAdmin'] },
-  { label: 'Obligations', path: '/obligations', icon: WalletCards, roles: ['BusinessApprover', 'BusinessAdmin', 'BankAdmin', 'PlatformAdmin'] },
+  { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, roles: ['BusinessApprover', 'BusinessAdmin', 'BankAdmin', 'PlatformAdmin'] },
+  { label: 'Activity', path: '/activity', icon: Activity, roles: ['BusinessApprover', 'BusinessAdmin', 'PlatformAdmin'] },
+  { label: 'Approvals', path: '/approvals', icon: AlertTriangle, roles: ['BusinessApprover', 'BusinessAdmin', 'PlatformAdmin'] },
+  { label: 'Policies', path: '/policies', icon: FileText, roles: ['BusinessApprover', 'BusinessAdmin', 'PlatformAdmin'] },
+  { label: 'Counterparties', path: '/counterparties', icon: Users, roles: ['BusinessApprover', 'BusinessAdmin', 'PlatformAdmin'] },
+  { label: 'Obligations', path: '/obligations', icon: WalletCards, roles: ['BusinessApprover', 'BusinessAdmin', 'PlatformAdmin'] },
   { label: 'Integrations', path: '/integrations', icon: Settings, roles: ['BusinessAdmin', 'PlatformAdmin'] },
   { label: 'Audit', path: '/audit', icon: FileClock, roles: ['BusinessAdmin', 'BankAdmin', 'PlatformAdmin'] },
   { label: 'Accounts', path: '/accounts', icon: Building2, roles: ['BusinessApprover', 'BusinessAdmin'] },
@@ -69,6 +69,7 @@ export const AppShell = () => {
   // The API's current-user response has no role claim, so the shell uses the prototype's business-admin view.
   const visibleNavigation = useMemo(() => navigation.filter((item) => item.roles.includes(activeRole)), []);
   const accountId = searchParams.get('account') ?? '';
+  const isCustomerView = searchParams.get('view') === 'customer';
   const activeAccount = accounts.find((account) => account.id === accountId);
   const activeMode = activeAccount ? accountModeLabel(activeAccount.mode) : 'Mixed mode';
   const activeModeClass = activeMode === 'Enforce' ? 'mode-enforce' : activeMode === 'Monitor' ? 'mode-monitor' : 'status-neutral';
@@ -166,13 +167,18 @@ export const AppShell = () => {
     setSearchParams(next);
   };
 
+  const setView = (view: 'bank' | 'customer') => {
+    const next = new URLSearchParams(searchParams);
+    if (view === 'customer') next.set('view', 'customer');
+    else next.delete('view');
+    setSearchParams(next);
+  };
+
   const openCommandResult = (path: string) => {
     navigate(path);
     setPaletteOpen(false);
     setQuery('');
   };
-
-  const activeTitle = visibleNavigation.find((item) => location.pathname === item.path || location.pathname.startsWith(`${item.path}/`))?.label ?? 'RemitMon';
 
   return (
     <div className="app-shell">
@@ -180,39 +186,47 @@ export const AppShell = () => {
         <aside className={`sidebar ${menuOpen ? 'sidebar-open' : ''}`} aria-label="Primary navigation">
           <div className="brand-lockup">
             <div className="brand-mark">R</div>
-            <div><p className="brand-name">RemitMon</p><p className="brand-caption">Payment protection</p></div>
-            <button className="icon-button ml-auto lg:hidden" aria-label="Close navigation" onClick={() => setMenuOpen(false)}><X size={18} /></button>
+            <div><p className="brand-name">RemitMon</p><p className="brand-caption">{searchParams.get('view') === 'customer' ? 'Customer view' : 'Bank view'}</p></div>
           </div>
-          <div className="nav-section-label">Workspace</div>
-          <nav className="nav-list">
-            {visibleNavigation.map(({ label, path, icon: Icon }) => (
-              <NavLink
-                key={path}
-                to={`${path}${location.search}`}
-                onClick={() => setMenuOpen(false)}
-                className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`}
-              >
-                <Icon size={18} strokeWidth={1.8} /><span>{label}</span>
-                {label === 'Approvals' && !approvalsLoading && !approvalsError && openApprovals.length > 0 && <span className="nav-count">{openApprovals.length}</span>}
-              </NavLink>
-            ))}
+          <nav className="nav-list px-3 py-4">
+            <button type="button" onClick={() => navigate(`/dashboard${location.search}`)} className={`nav-link w-full ${location.pathname === '/dashboard' ? 'nav-link-active' : ''}`}>
+              <LayoutDashboard size={18} /><span>Dashboard</span>
+            </button>
+            {isCustomerView && (
+              <button type="button" onClick={() => navigate(`/policies${location.search}`)} className={`nav-link w-full ${location.pathname.startsWith('/policies') ? 'nav-link-active' : ''}`}>
+                <FileText size={18} /><span>Rules</span>
+              </button>
+            )}
+            <button type="button" onClick={() => navigate(`/accounts${location.search}`)} className={`nav-link w-full ${location.pathname === '/accounts' ? 'nav-link-active' : ''}`}>
+              <WalletCards size={18} /><span>Balances</span>
+            </button>
           </nav>
-          <div className="sidebar-bottom">
-            <div className="sidebar-status">
-              <span className={`status-dot ${accountsError ? 'status-dot-error' : ''}`} />
-              {accountsError ? 'API unavailable' : accountsLoading ? 'Checking API…' : 'API connected'}
-            </div>
-            <p className="sidebar-version">Prototype · Business admin</p>
-          </div>
         </aside>
 
         <div className="shell-content">
           <header className="topbar">
             <div className="flex min-w-0 items-center gap-3">
-              <button className="icon-button lg:hidden" aria-label="Open navigation" onClick={() => setMenuOpen(true)}>
-                <span className="menu-glyph" aria-hidden="true">☰</span>
-              </button>
-              <div className="breadcrumb"><span>Workspace</span><span className="breadcrumb-slash">/</span><strong>{activeTitle}</strong></div>
+              <div className="brand-mark" aria-label="RemitMon">R</div>
+              <div className="flex h-9 overflow-hidden rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900" role="tablist" aria-label="Dashboard view">
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={searchParams.get('view') !== 'customer'}
+                  onClick={() => setView('bank')}
+                  className={`px-4 text-xs font-bold ${searchParams.get('view') !== 'customer' ? 'bg-slate-800 text-white dark:bg-slate-700' : 'text-slate-600 dark:text-slate-300'}`}
+                >
+                  Bank View
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={searchParams.get('view') === 'customer'}
+                  onClick={() => setView('customer')}
+                  className={`px-4 text-xs font-bold ${searchParams.get('view') === 'customer' ? 'bg-slate-800 text-white dark:bg-slate-700' : 'text-slate-600 dark:text-slate-300'}`}
+                >
+                  Customer View
+                </button>
+              </div>
             </div>
 
             <div className="topbar-actions">

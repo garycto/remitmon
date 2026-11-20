@@ -5798,3 +5798,177 @@ ORDER BY p.id
 2026-11-19 16:44:51.557 -05:00 [INF] Executed endpoint 'HTTP: GET /api/v1/modern-treasury/payment-orders'
 2026-11-19 16:44:51.557 -05:00 [INF] HTTP GET /api/v1/modern-treasury/payment-orders responded 200 in 778.8537 ms
 2026-11-19 16:44:51.557 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/api/v1/modern-treasury/payment-orders - 200 null application/json; charset=utf-8 789.1767ms
+2026-11-19 16:49:41.313 -05:00 [INF] Executed DbCommand (69ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE WHEN COUNT(*) = 0 THEN FALSE ELSE TRUE END
+FROM pg_class AS cls
+JOIN pg_namespace AS ns ON ns.oid = cls.relnamespace
+WHERE
+        cls.relkind IN ('r', 'v', 'm', 'f', 'p') AND
+        ns.nspname NOT IN ('pg_catalog', 'information_schema') AND
+        -- Exclude tables which are members of PG extensions
+        NOT EXISTS (
+            SELECT 1 FROM pg_depend WHERE
+                classid=(
+                    SELECT cls.oid
+                    FROM pg_class AS cls
+                             JOIN pg_namespace AS ns ON ns.oid = cls.relnamespace
+                    WHERE relname='pg_class' AND ns.nspname='pg_catalog'
+                ) AND
+                objid=cls.oid AND
+                deptype IN ('e', 'x')
+        )
+2026-11-19 16:49:41.356 -05:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DO $$
+BEGIN
+    IF to_regclass('public.exceptions') IS NOT NULL THEN
+        IF to_regclass('public.approvals') IS NOT NULL THEN
+            RAISE EXCEPTION 'Both legacy exceptions and approvals tables exist.';
+        END IF;
+
+        ALTER TABLE public.exceptions RENAME TO approvals;
+        ALTER TABLE public.approvals RENAME CONSTRAINT "PK_exceptions" TO "PK_approvals";
+        ALTER TABLE public.approvals RENAME CONSTRAINT "FK_exceptions_decisions_decision_id" TO "FK_approvals_decisions_decision_id";
+        ALTER INDEX public."IX_exceptions_decision_id" RENAME TO "IX_approvals_decision_id";
+    END IF;
+END
+$$;
+2026-11-19 16:49:41.504 -05:00 [INF] Executed DbCommand (20ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM banks AS b)
+2026-11-19 16:49:41.563 -05:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a.id, a.bank_id, a.business_customer_id, a.created_at, a.display_name, a.masked_account_number, a.mode, a.status, a.updated_at
+FROM accounts AS a
+WHERE a.display_name = 'USD Operating Account'
+LIMIT 2
+2026-11-19 16:49:41.622 -05:00 [INF] Executed DbCommand (24ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a.id, a.bank_id, a.business_customer_id, a.created_at, a.display_name, a.masked_account_number, a.mode, a.status, a.updated_at
+FROM accounts AS a
+WHERE a.display_name = 'EUR International Payments'
+LIMIT 2
+2026-11-19 16:49:41.641 -05:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a.id, a.bank_id, a.business_customer_id, a.created_at, a.display_name, a.masked_account_number, a.mode, a.status, a.updated_at
+FROM accounts AS a
+WHERE a.display_name = 'GBP Treasury Account'
+LIMIT 2
+2026-11-19 16:49:41.712 -05:00 [INF] Executed DbCommand (22ms) [Parameters=[@__usdAccount_Id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p1.id, p1.account_id, p1.approved_by_user_id, p1.created_at, p1.created_by_user_id, p1.effective_from, p1.name, p1.status, p1.updated_at, p1.version, p0.id, p0.action, p0.created_at, p0.enabled, p0.locked, p0."Parameters", p0.policy_id, p0.priority, p0.rule_type, p0.scope_ref, p0.scope_type, p0.updated_at
+FROM (
+    SELECT p.id, p.account_id, p.approved_by_user_id, p.created_at, p.created_by_user_id, p.effective_from, p.name, p.status, p.updated_at, p.version
+    FROM policies AS p
+    WHERE p.account_id = @__usdAccount_Id_0 AND p.status = 1
+    LIMIT 1
+) AS p1
+LEFT JOIN policy_rules AS p0 ON p1.id = p0.policy_id
+ORDER BY p1.id
+2026-11-19 16:49:41.799 -05:00 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT p.reference
+FROM payment_events AS p
+WHERE p.reference IS NOT NULL AND p.reference LIKE 'DEMO-%'
+2026-11-19 16:49:41.830 -05:00 [INF] Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT p.id, p.account_id, p.ach_company_id, p.ach_sec_code, p.amount, p.correlation_id, p.counterparty_id, p.counterparty_ref, p.created_at, p.currency, p.direction, p.event_time, p.external_event_id, p.initiation, p.invoice_ref, p.memo, p.rail, p."RawPayload", p.reference, p.settlement_date, p.updated_at
+FROM payment_events AS p
+WHERE p.reference IS NOT NULL AND p.reference LIKE 'DEMO-%'
+2026-11-19 16:49:41.888 -05:00 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT e.source_ref
+FROM expected_obligations AS e
+WHERE e.source_ref LIKE 'DEMO-%'
+2026-11-19 16:49:41.920 -05:00 [INF] User profile is available. Using '/Users/garylazarus/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-11-19 16:49:42.039 -05:00 [INF] Now listening on: http://localhost:5199
+2026-11-19 16:49:42.040 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-19 16:49:42.040 -05:00 [INF] Hosting environment: Development
+2026-11-19 16:49:42.040 -05:00 [INF] Content root path: /Users/garylazarus/Source/Remit Monitor/src/RemitMon.Api
+2026-11-19 16:49:50.152 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/api/v1/modern-treasury/incoming-payment-details - null null
+2026-11-19 16:49:50.152 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/api/v1/approvals - null null
+2026-11-19 16:49:50.152 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/api/v1/accounts - null null
+2026-11-19 16:49:50.152 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/api/v1/modern-treasury/payment-orders - null null
+2026-11-19 16:49:50.152 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5199/api/v1/dashboard/activity - null null
+2026-11-19 16:49:50.196 -05:00 [WRN] Failed to determine the https port for redirect.
+2026-11-19 16:49:50.198 -05:00 [INF] CORS policy execution successful.
+2026-11-19 16:49:50.198 -05:00 [INF] CORS policy execution successful.
+2026-11-19 16:49:50.198 -05:00 [INF] CORS policy execution successful.
+2026-11-19 16:49:50.198 -05:00 [INF] CORS policy execution successful.
+2026-11-19 16:49:50.198 -05:00 [INF] CORS policy execution successful.
+2026-11-19 16:49:50.209 -05:00 [INF] Executing endpoint 'HTTP: GET /api/v1/accounts/ => GetAccounts'
+2026-11-19 16:49:50.209 -05:00 [INF] Executing endpoint 'HTTP: GET /api/v1/modern-treasury/incoming-payment-details'
+2026-11-19 16:49:50.209 -05:00 [INF] Executing endpoint 'HTTP: GET /api/v1/modern-treasury/payment-orders'
+2026-11-19 16:49:50.209 -05:00 [INF] Executing endpoint 'HTTP: GET /api/v1/dashboard/activity => GetActivity'
+2026-11-19 16:49:50.209 -05:00 [INF] Executing endpoint 'HTTP: GET /api/v1/approvals/ => GetApprovals'
+2026-11-19 16:49:50.220 -05:00 [INF] Modern Treasury configuration loaded. OrganizationId present: true; ApiKey present: true; Live mode: true
+2026-11-19 16:49:50.220 -05:00 [INF] Modern Treasury configuration loaded. OrganizationId present: true; ApiKey present: true; Live mode: true
+2026-11-19 16:49:50.248 -05:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a.id, a.business_customer_id, a.bank_id, a.display_name, a.masked_account_number, a.status, a.mode, a.created_at, a.updated_at
+FROM accounts AS a
+2026-11-19 16:49:50.254 -05:00 [INF] Setting HTTP status code 200.
+2026-11-19 16:49:50.258 -05:00 [INF] Writing value of type 'List`1' as Json.
+2026-11-19 16:49:50.264 -05:00 [INF] Executed endpoint 'HTTP: GET /api/v1/accounts/ => GetAccounts'
+2026-11-19 16:49:50.265 -05:00 [INF] HTTP GET /api/v1/accounts responded 200 in 65.0626 ms
+2026-11-19 16:49:50.268 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/api/v1/accounts - 200 null application/json; charset=utf-8 117.8765ms
+2026-11-19 16:49:50.433 -05:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a.id, a.bank_id, a.business_customer_id, a.created_at, a.display_name, a.masked_account_number, a.mode, a.status, a.updated_at
+FROM accounts AS a
+ORDER BY a.created_at
+LIMIT 1
+2026-11-19 16:49:50.434 -05:00 [INF] Executed DbCommand (18ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e.id, e.amount, e.business_customer_id, e.counterparty_id, e.counterparty_name, e.created_at, e.created_by_ext, e.created_event_at, e.due_date, e.matched_payment_event_id, e.source, e.source_ref, e.status, e.updated_at
+FROM expected_obligations AS e
+ORDER BY e.due_date
+LIMIT @__p_0
+2026-11-19 16:49:50.435 -05:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a.id, a.bank_id, a.business_customer_id, a.created_at, a.display_name, a.masked_account_number, a.mode, a.status, a.updated_at
+FROM accounts AS a
+ORDER BY a.created_at
+LIMIT 1
+2026-11-19 16:49:50.435 -05:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a.id, a.decision_id, CASE a.status
+    WHEN 0 THEN 'Open'
+    WHEN 1 THEN 'Approved'
+    WHEN 2 THEN 'Rejected'
+    WHEN 3 THEN 'Expired'
+    ELSE a.status::text
+END, a.assigned_to_user_id, a.expires_at, a.created_at
+FROM approvals AS a
+2026-11-19 16:49:50.435 -05:00 [INF] Setting HTTP status code 200.
+2026-11-19 16:49:50.437 -05:00 [INF] Writing value of type 'List`1' as Json.
+2026-11-19 16:49:50.437 -05:00 [INF] Executed endpoint 'HTTP: GET /api/v1/approvals/ => GetApprovals'
+2026-11-19 16:49:50.437 -05:00 [INF] HTTP GET /api/v1/approvals responded 200 in 238.3398 ms
+2026-11-19 16:49:50.438 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/api/v1/approvals - 200 null application/json; charset=utf-8 287.5107ms
+2026-11-19 16:49:50.443 -05:00 [INF] Start processing HTTP request GET https://app.moderntreasury.com/api/payment_orders?*
+2026-11-19 16:49:50.443 -05:00 [INF] Start processing HTTP request GET https://app.moderntreasury.com/api/incoming_payment_details?*
+2026-11-19 16:49:50.445 -05:00 [INF] Sending HTTP request GET https://app.moderntreasury.com/api/payment_orders?*
+2026-11-19 16:49:50.445 -05:00 [INF] Sending HTTP request GET https://app.moderntreasury.com/api/incoming_payment_details?*
+2026-11-19 16:49:50.475 -05:00 [INF] Executed DbCommand (24ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT p0.id, p0.account_id, p0.ach_company_id, p0.ach_sec_code, p0.amount, p0.correlation_id, p0.counterparty_id, p0.counterparty_ref, p0.created_at, p0.currency, p0.direction, p0.event_time, p0.external_event_id, p0.initiation, p0.invoice_ref, p0.memo, p0.rail, p0."RawPayload", p0.reference, p0.settlement_date, p0.updated_at, a.id, a.bank_id, a.business_customer_id, a.created_at, a.display_name, a.masked_account_number, a.mode, a.status, a.updated_at
+FROM (
+    SELECT p.id, p.account_id, p.ach_company_id, p.ach_sec_code, p.amount, p.correlation_id, p.counterparty_id, p.counterparty_ref, p.created_at, p.currency, p.direction, p.event_time, p.external_event_id, p.initiation, p.invoice_ref, p.memo, p.rail, p."RawPayload", p.reference, p.settlement_date, p.updated_at
+    FROM payment_events AS p
+    ORDER BY p.event_time DESC
+    LIMIT @__p_0
+) AS p0
+INNER JOIN accounts AS a ON p0.account_id = a.id
+ORDER BY p0.event_time DESC
+2026-11-19 16:49:50.553 -05:00 [INF] Executed DbCommand (53ms) [Parameters=[@__accountIds_0='?' (DbType = Object)], CommandType='"Text"', CommandTimeout='30']
+SELECT p.id, p.account_id, p.approved_by_user_id, p.created_at, p.created_by_user_id, p.effective_from, p.name, p.status, p.updated_at, p.version, p0.id, p0.action, p0.created_at, p0.enabled, p0.locked, p0."Parameters", p0.policy_id, p0.priority, p0.rule_type, p0.scope_ref, p0.scope_type, p0.updated_at
+FROM policies AS p
+LEFT JOIN policy_rules AS p0 ON p.id = p0.policy_id
+WHERE p.account_id = ANY (@__accountIds_0) AND p.status = 1
+ORDER BY p.id
+2026-11-19 16:49:50.562 -05:00 [INF] Setting HTTP status code 200.
+2026-11-19 16:49:50.564 -05:00 [INF] Writing value of type 'DashboardActivityDto' as Json.
+2026-11-19 16:49:50.569 -05:00 [INF] Executed endpoint 'HTTP: GET /api/v1/dashboard/activity => GetActivity'
+2026-11-19 16:49:50.569 -05:00 [INF] HTTP GET /api/v1/dashboard/activity responded 200 in 370.2770 ms
+2026-11-19 16:49:50.570 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/api/v1/dashboard/activity - 200 null application/json; charset=utf-8 419.3421ms
+2026-11-19 16:49:51.040 -05:00 [INF] Received HTTP response headers after 591.7989ms - 200
+2026-11-19 16:49:51.041 -05:00 [INF] End processing HTTP request after 599.5605ms - 200
+2026-11-19 16:49:51.046 -05:00 [INF] Setting HTTP status code 200.
+2026-11-19 16:49:51.046 -05:00 [INF] Writing value of type 'ListSelectIterator`2' as Json.
+2026-11-19 16:49:51.050 -05:00 [INF] Executed endpoint 'HTTP: GET /api/v1/modern-treasury/incoming-payment-details'
+2026-11-19 16:49:51.050 -05:00 [INF] HTTP GET /api/v1/modern-treasury/incoming-payment-details responded 200 in 850.8512 ms
+2026-11-19 16:49:51.050 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/api/v1/modern-treasury/incoming-payment-details - 200 null application/json; charset=utf-8 900.0021ms
+2026-11-19 16:49:51.474 -05:00 [INF] Received HTTP response headers after 1028.6729ms - 200
+2026-11-19 16:49:51.474 -05:00 [INF] End processing HTTP request after 1032.5037ms - 200
+2026-11-19 16:49:51.478 -05:00 [INF] Setting HTTP status code 200.
+2026-11-19 16:49:51.478 -05:00 [INF] Writing value of type 'ListSelectIterator`2' as Json.
+2026-11-19 16:49:51.480 -05:00 [INF] Executed endpoint 'HTTP: GET /api/v1/modern-treasury/payment-orders'
+2026-11-19 16:49:51.481 -05:00 [INF] HTTP GET /api/v1/modern-treasury/payment-orders responded 200 in 1281.3860 ms
+2026-11-19 16:49:51.481 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5199/api/v1/modern-treasury/payment-orders - 200 null application/json; charset=utf-8 1330.4664ms

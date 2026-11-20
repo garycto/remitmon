@@ -62,12 +62,27 @@ textarea:focus-visible {
   @apply outline-none ring-2 ring-indigo-500 ring-offset-2 ring-offset-white dark:ring-offset-slate-950;
 }
 
+.heatmap-scroll { overflow-x: auto; }
+.heatmap-grid { display: grid; }
+.heatmap-axis, .heatmap-direction-row { display: grid; grid-template-columns: 80px minmax(0, 1fr); align-items: center; }
+.heatmap-name { display: block; min-height: 30px; padding: 0 8px; color: #b0bfd0; font-size: 12px; overflow-wrap: anywhere; }
+.heatmap-direction-row > strong { color: #dce8f4; font-size: 13px; }
+.heatmap-direction + .heatmap-direction { margin-top: 12px; }
+.heatmap-activity-bar { height: 38px; border-radius: 6px; }
+.heatmap-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; margin-top: 8px; margin-left: 80px; color: #a4b7c8; font-size: 12px; }
+.heatmap-gradient { width: 120px; height: 8px; border-radius: 8px; background: linear-gradient(90deg, rgb(125,25,25), rgb(180,35,35), rgb(220,65,65)); }
+.heatmap-gradient-inbound { background: linear-gradient(90deg, rgb(18,130,80), rgb(30,175,105), rgb(75,210,145)); }
+.heatmap-legend-caption { margin-left: auto; }
+.heatmap-tabs { display: flex; max-width: 100%; gap: 4px; padding: 4px; overflow-x: auto; border: 1px solid #26384d; border-radius: 7px; }
+.heatmap-tabs button { white-space: nowrap; padding: 8px 13px; border-radius: 5px; background: transparent; color: #9cacc2; font-size: 13px; }
+.heatmap-tabs button.tab-active { background: #1c304a; color: #eef4fc; }
+
 .shell-frame {
   @apply flex min-h-[calc(100vh-38px)];
 }
 
 .sidebar {
-  @apply sticky top-0 flex h-screen max-h-[calc(100vh-38px)] w-60 shrink-0 flex-col border-r border-slate-200 bg-white px-3 dark:border-slate-800 dark:bg-slate-900;
+  @apply sticky top-0 flex h-screen max-h-[calc(100vh-38px)] w-60 shrink-0 flex-col border-r border-slate-200 bg-white px-0 dark:border-slate-800 dark:bg-slate-900;
 }
 
 .brand-lockup {

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowUpRight, LockKeyhole } from 'lucide-react';
 import { LoadingSpinner } from '../components/LoadingSpinner';
@@ -56,7 +56,7 @@ export const PoliciesPage = () => {
   return (
     <div className="space-y-6">
       <header className="page-heading">
-        <div><p className="eyebrow">Controls</p><h1>Policies</h1><p>Review policy versions and activation status.</p></div>
+        <div><p className="eyebrow">Controls</p><h1>Rules</h1><p>Review and manage account rule versions and activation status.</p></div>
         <span className="subtle-count"><LockKeyhole size={16} /> Account-scoped</span>
       </header>
       <section className="panel overflow-hidden">
@@ -462,12 +462,95 @@ export const IntegrationsPage = () => {
 };
 
 export const AuditPage = () => (
-  <UnavailablePage title="Audit" description="The audit-log and chain-verification endpoints are not available yet." />
+  <div className="space-y-6">
+    <header className="page-heading">
+      <div><p className="eyebrow">Bank governance</p><h1>Audit</h1><p>Payment and policy activity for the bank portfolio.</p></div>
+    </header>
+    <section className="panel overflow-hidden">
+      <table className="data-table">
+        <thead><tr><th>Time</th><th>Activity</th><th>Customer</th><th>Outcome</th></tr></thead>
+        <tbody>
+          <tr><td>Today</td><td>Instant eligibility review</td><td>Northstar Components</td><td>38 potential payments</td></tr>
+          <tr><td>Today</td><td>ACH payment monitored</td><td>Apex Facilities Group</td><td>17 ACH payments</td></tr>
+          <tr><td>Today</td><td>Fallback review</td><td>Meridian Supply Co.</td><td>1 fallback</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
 );
 
-export const BankPage = () => (
-  <UnavailablePage title="Bank overview" description="The bank portfolio and customer APIs are not available yet." />
-);
+export const BankPage = () => {
+  const location = useLocation();
+  const isCustomers = location.pathname.endsWith('/customers');
+  const isBaseline = location.pathname.endsWith('/baseline');
+
+  if (isCustomers) {
+    return (
+      <div className="space-y-6">
+        <header className="page-heading">
+          <div><p className="eyebrow">Bank portfolio</p><h1>Business customers</h1><p>Customer-level activity and payment volume.</p></div>
+          <Link className="subtle-count" to="/dashboard">Portfolio dashboard</Link>
+        </header>
+        <section className="grid gap-4 md:grid-cols-3">
+          {[
+            ['Northstar Components', '38 Instant · 18 ACH · 18 Wire'],
+            ['Apex Facilities Group', '31 Instant · 17 ACH · 16 Wire'],
+            ['Meridian Supply Co.', '33 Instant · 15 ACH · 17 Wire'],
+          ].map(([name, activity]) => (
+            <article key={name} className="panel p-5">
+              <h2 className="font-semibold">{name}</h2>
+              <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{activity}</p>
+              <Link className="mt-4 inline-block text-sm font-medium text-indigo-600 hover:underline" to="/dashboard">View portfolio activity</Link>
+            </article>
+          ))}
+        </section>
+      </div>
+    );
+  }
+
+  if (isBaseline) {
+    return (
+      <div className="space-y-6">
+        <header className="page-heading">
+          <div><p className="eyebrow">Bank controls</p><h1>Baseline policies</h1><p>Portfolio-wide payment guardrails.</p></div>
+        </header>
+        <section className="grid gap-4 md:grid-cols-3">
+          {[
+            ['Instant eligibility', 'R/T and DDA eligibility review', 'Active'],
+            ['ACH conversion', 'Potential conversion opportunity', 'Monitor'],
+            ['Fallback review', 'Instant-to-ACH fallback monitoring', 'Active'],
+          ].map(([name, description, status]) => (
+            <article key={name} className="panel p-5">
+              <div className="flex items-start justify-between gap-3"><h2 className="font-semibold">{name}</h2><span className="status-pill status-positive">{status}</span></div>
+              <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">{description}</p>
+            </article>
+          ))}
+        </section>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <header className="page-heading">
+        <div><p className="eyebrow">Bank workspace</p><h1>Bank overview</h1><p>Portfolio-wide payment operations across business customers.</p></div>
+        <Link className="subtle-count" to="/dashboard">Open portfolio dashboard</Link>
+      </header>
+      <section className="grid gap-4 md:grid-cols-3">
+        {[
+          ['Customers', '/bank/customers', 'Review business customer activity and accounts'],
+          ['Baseline policies', '/bank/baseline', 'Configure portfolio-wide payment guardrails'],
+          ['Audit', '/audit', 'Review operational and decision history'],
+        ].map(([title, path, description]) => (
+          <Link key={path} className="panel block p-5 transition hover:border-indigo-300" to={path}>
+            <h2 className="font-semibold">{title}</h2>
+            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{description}</p>
+          </Link>
+        ))}
+      </section>
+    </div>
+  );
+};
 
 export const AdminPage = () => (
   <UnavailablePage title="Platform administration" description="Tenant, simulator, and system-health APIs are not available yet." />

@@ -32,10 +32,19 @@ public record DashboardPaymentDto(
     string Outcome,
     Guid? PolicyId,
     string PolicyName,
-    IReadOnlyList<string> RuleHits
+    IReadOnlyList<string> RuleHits,
+    bool AchInstantEligible,
+    bool ConvertedToInstant
+);
+
+public record AchInstantOpportunityDto(
+    int Eligible,
+    int Converted,
+    int Remaining
 );
 
 public record DashboardActivityDto(
     IReadOnlyList<DashboardExpectedPaymentDto> ExpectedPayments,
-    IReadOnlyList<DashboardPaymentDto> Payments
+    IReadOnlyList<DashboardPaymentDto> Payments,
+    AchInstantOpportunityDto AchInstantOpportunity
 );

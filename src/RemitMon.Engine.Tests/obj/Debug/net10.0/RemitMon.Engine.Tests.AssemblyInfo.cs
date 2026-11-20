@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RemitMon.Engine.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82626c60a06d0eb1eba00613ebdf716817ed41d5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+baf80872f13c2866678ebc73caab94a89068c5a4")]
 [assembly: System.Reflection.AssemblyProductAttribute("RemitMon.Engine.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RemitMon.Engine.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

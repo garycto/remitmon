@@ -263,9 +263,45 @@ public class DemoDataSeeder
 
     private static void SeedFinancialActivity(RemitMonDbContext context)
     {
-        var usdAccount = context.Accounts.SingleOrDefault(a => a.DisplayName == "USD Operating Account");
-        var eurAccount = context.Accounts.SingleOrDefault(a => a.DisplayName == "EUR International Payments");
-        var gbpAccount = context.Accounts.SingleOrDefault(a => a.DisplayName == "GBP Treasury Account");
+        var usdAccount = context.Accounts
+            .SingleOrDefault(a => a.DisplayName == "USD Operating Account"
+                || a.DisplayName == "Northstar Components — Operating");
+        var eurAccount = context.Accounts
+            .SingleOrDefault(a => a.DisplayName == "EUR International Payments"
+                || a.DisplayName == "Apex Facilities — International");
+        var gbpAccount = context.Accounts
+            .SingleOrDefault(a => a.DisplayName == "GBP Treasury Account"
+                || a.DisplayName == "Meridian Supply — Treasury");
+
+        if (usdAccount is not null)
+            usdAccount.DisplayName = "Northstar Components — Operating";
+        if (eurAccount is not null)
+            eurAccount.DisplayName = "Apex Facilities — International";
+        if (gbpAccount is not null)
+            gbpAccount.DisplayName = "Meridian Supply — Treasury";
+
+        var existingCustomers = context.BusinessCustomers.ToList();
+        if (existingCustomers.Count > 0)
+        {
+            existingCustomers[0].LegalName = "Northstar Components";
+            if (existingCustomers.Count > 1)
+                existingCustomers[1].LegalName = "Apex Facilities Group";
+        }
+        if (!existingCustomers.Any(customer => customer.LegalName == "Meridian Supply Co."))
+        {
+            var bank = context.Banks.OrderBy(candidate => candidate.Name).First();
+            existingCustomers.Add(new BusinessCustomer
+            {
+                Id = Guid.NewGuid(),
+                BankId = bank.Id,
+                LegalName = "Meridian Supply Co.",
+                Status = BusinessCustomerStatus.Active,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            });
+            context.BusinessCustomers.Add(existingCustomers[^1]);
+        }
+        context.SaveChanges();
 
         if (usdAccount is null || eurAccount is null || gbpAccount is null)
         {
@@ -489,6 +525,137 @@ public class DemoDataSeeder
                 InvoiceRef = "CLOUDLINE-1044",
                 EventTime = now.AddHours(-1),
                 SettlementDate = now
+            },
+            new PaymentEvent
+            {
+                AccountId = usdAccount.Id,
+                Rail = Rail.ACH,
+                Direction = PaymentDirection.Outbound,
+                Initiation = PaymentInitiation.Push,
+                Amount = 6_750m,
+                Currency = "USD",
+                CounterpartyRef = "Northstar Components",
+                AchCompanyId = "NORTHSTAR02",
+                AchSecCode = "CCD",
+                Memo = "Instant attempt fallback to ACH - recipient not reachable",
+                Reference = "DEMO-PAY-FALLBACK-001",
+                EventTime = now.AddDays(-3),
+                SettlementDate = now.AddDays(-1)
+            },
+            new PaymentEvent
+            {
+                AccountId = usdAccount.Id,
+                Rail = Rail.RTP,
+                Direction = PaymentDirection.Outbound,
+                Initiation = PaymentInitiation.Push,
+                Amount = 11_200m,
+                Currency = "USD",
+                CounterpartyRef = "Apex Facilities",
+                Memo = "Supplier payment",
+                Reference = "DEMO-PAY-OUT-RTP-002",
+                EventTime = now.AddDays(-5),
+                SettlementDate = now.AddDays(-5)
+            },
+            new PaymentEvent
+            {
+                AccountId = eurAccount.Id,
+                Rail = Rail.FedNow,
+                Direction = PaymentDirection.Inbound,
+                Initiation = PaymentInitiation.RfP,
+                Amount = 5_940m,
+                Currency = "USD",
+                CounterpartyRef = "Apex Hosting",
+                Memo = "Equipment lease",
+                Reference = "DEMO-PAY-IN-FEDNOW-002",
+                EventTime = now.AddDays(-7)
+            },
+            new PaymentEvent
+            {
+                AccountId = gbpAccount.Id,
+                Rail = Rail.Wire,
+                Direction = PaymentDirection.Outbound,
+                Initiation = PaymentInitiation.Push,
+                Amount = 92_000m,
+                Currency = "GBP",
+                CounterpartyRef = "Global Treasury Services",
+                Memo = "International settlement",
+                Reference = "DEMO-PAY-OUT-WIRE-002",
+                EventTime = now.AddDays(-9),
+                SettlementDate = now.AddDays(-8)
+            },
+            new PaymentEvent
+            {
+                AccountId = usdAccount.Id,
+                Rail = Rail.ACH,
+                Direction = PaymentDirection.Outbound,
+                Initiation = PaymentInitiation.Push,
+                Amount = 14_500m,
+                Currency = "USD",
+                CounterpartyRef = "Meridian Supply",
+                AchCompanyId = "MERIDIAN02",
+                AchSecCode = "CCD",
+                Memo = "Vendor settlement",
+                Reference = "DEMO-PAY-OUT-ACH-002",
+                EventTime = now.AddDays(-12),
+                SettlementDate = now.AddDays(-10)
+            },
+            new PaymentEvent
+            {
+                AccountId = usdAccount.Id,
+                Rail = Rail.RTP,
+                Direction = PaymentDirection.Outbound,
+                Initiation = PaymentInitiation.Push,
+                Amount = 7_800m,
+                Currency = "USD",
+                CounterpartyRef = "Northstar Components",
+                Memo = "Invoice settlement",
+                Reference = "DEMO-PAY-OUT-RTP-003",
+                EventTime = now.AddDays(-18),
+                SettlementDate = now.AddDays(-18)
+            },
+            new PaymentEvent
+            {
+                AccountId = usdAccount.Id,
+                Rail = Rail.Wire,
+                Direction = PaymentDirection.Outbound,
+                Initiation = PaymentInitiation.Push,
+                Amount = 36_250m,
+                Currency = "USD",
+                CounterpartyRef = "Apex Facilities",
+                Memo = "Construction funding",
+                Reference = "DEMO-PAY-OUT-WIRE-003",
+                EventTime = now.AddDays(-21),
+                SettlementDate = now.AddDays(-20)
+            },
+            new PaymentEvent
+            {
+                AccountId = eurAccount.Id,
+                Rail = Rail.ACH,
+                Direction = PaymentDirection.Inbound,
+                Initiation = PaymentInitiation.Pull,
+                Amount = 12_350m,
+                Currency = "USD",
+                CounterpartyRef = "Alpine Distribution",
+                AchCompanyId = "ALPINE02",
+                AchSecCode = "CCD",
+                Memo = "Customer receivable",
+                Reference = "DEMO-PAY-IN-ACH-002",
+                EventTime = now.AddDays(-24),
+                SettlementDate = now.AddDays(-22)
+            },
+            new PaymentEvent
+            {
+                AccountId = usdAccount.Id,
+                Rail = Rail.FedNow,
+                Direction = PaymentDirection.Outbound,
+                Initiation = PaymentInitiation.Push,
+                Amount = 9_600m,
+                Currency = "USD",
+                CounterpartyRef = "Meridian Supply",
+                Memo = "Expedited vendor payment",
+                Reference = "DEMO-PAY-OUT-FEDNOW-002",
+                EventTime = now.AddDays(-27),
+                SettlementDate = now.AddDays(-27)
             }
         };
 
@@ -497,9 +664,98 @@ public class DemoDataSeeder
             .Select(payment => payment.Reference!)
             .ToHashSet();
 
+        foreach (var payment in payments.Where(payment =>
+                     !existingPaymentReferences.Contains(payment.Reference!)
+                     && payment.Rail == Rail.ACH))
+        {
+            var fallback = payment.Memo?.Contains("fallback", StringComparison.OrdinalIgnoreCase) == true;
+            var referenceEligible = payment.Reference != null
+                && Math.Abs(payment.Reference.GetHashCode()) % 3 != 0;
+            payment.RawPayload["achInstantEligible"] = !fallback
+                && referenceEligible
+                && payment.Amount <= 25_000m;
+            payment.RawPayload["convertedToInstant"] = false;
+        }
+
         context.PaymentEvents.AddRange(
             payments.Where(payment => !existingPaymentReferences.Contains(payment.Reference!)));
         context.SaveChanges();
+
+        var generatedReferences = context.PaymentEvents
+            .Where(payment => payment.Reference != null && payment.Reference.StartsWith("DEMO-VOLUME-"))
+            .Select(payment => payment.Reference!)
+            .ToHashSet();
+        var accounts = new[] { usdAccount, eurAccount, gbpAccount };
+        var rails = new[] { Rail.ACH, Rail.RTP, Rail.FedNow, Rail.Wire };
+        var customerNames = new[]
+        {
+            "Northstar Components",
+            "Apex Facilities Group",
+            "Meridian Supply Co.",
+            "Alpine Distribution",
+            "Coastal Freight",
+            "Westlake Services"
+        };
+        var generatedPayments = new List<PaymentEvent>();
+
+        for (var day = 0; day < 30; day++)
+        {
+            for (var item = 0; item < 8; item++)
+            {
+                var reference = $"DEMO-VOLUME-{day:D2}-{item:D2}";
+                if (generatedReferences.Contains(reference))
+                    continue;
+
+                var account = accounts[(day + item) % accounts.Length];
+                var rail = rails[(day * 3 + item) % rails.Length];
+                var direction = (day + item) % 5 == 0
+                    ? PaymentDirection.Inbound
+                    : PaymentDirection.Outbound;
+                var amount = 1850m + ((day * 997 + item * 437) % 48000);
+                var fallback = rail == Rail.ACH && day % 11 == 0 && item == 3;
+
+                generatedPayments.Add(new PaymentEvent
+                {
+                    AccountId = account.Id,
+                    ExternalEventId = fallback ? $"fallback-{reference}" : null,
+                    Rail = rail,
+                    Direction = direction,
+                    Initiation = direction == PaymentDirection.Inbound
+                        ? (rail == Rail.ACH ? PaymentInitiation.Pull : PaymentInitiation.RfP)
+                        : PaymentInitiation.Push,
+                    Amount = amount,
+                    Currency = account.Id == gbpAccount.Id ? "GBP" : "USD",
+                    CounterpartyRef = customerNames[(day + item) % customerNames.Length],
+                    AchCompanyId = rail == Rail.ACH ? $"DEMO{day:D2}{item:D2}" : null,
+                    AchSecCode = rail == Rail.ACH ? "CCD" : null,
+                    Memo = fallback
+                        ? "Instant attempt fallback to ACH - recipient not reachable"
+                        : rail == Rail.Wire ? "Treasury wire settlement"
+                        : rail == Rail.FedNow ? "Real-time customer payment"
+                        : rail == Rail.RTP ? "RTP supplier payment"
+                        : "ACH customer payment",
+                    Reference = reference,
+                    EventTime = now.AddDays(-day).AddMinutes(item * 37),
+                    SettlementDate = rail == Rail.ACH
+                        ? now.AddDays(-day).AddDays(1)
+                        : now.AddDays(-day)
+                });
+                if (rail == Rail.ACH)
+                {
+                    generatedPayments[^1].RawPayload["achInstantEligible"] =
+                        !fallback
+                        && amount <= 25_000m
+                        && (day + item) % 3 != 0;
+                    generatedPayments[^1].RawPayload["convertedToInstant"] = false;
+                }
+            }
+        }
+
+        if (generatedPayments.Count > 0)
+        {
+            context.PaymentEvents.AddRange(generatedPayments);
+            context.SaveChanges();
+        }
 
         var paymentIds = context.PaymentEvents
             .Where(payment => payment.Reference != null && payment.Reference.StartsWith("DEMO-"))
